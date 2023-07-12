@@ -1,0 +1,72 @@
+#root {
+    margin: 0 auto;
+    padding: 1rem;
+    --purple: #150939;
+    --lila-white: #EEDDEF;
+    --light-purple: #3D2A75;
+    --ice-white: rgba(255, 255, 255, 0.87);
+    overflow: hidden;
+    
+  }
+  
+  * {
+    background-color: var(--purple);
+  }
+  
+  
+  body {
+    margin: 0;
+    display: flex;
+    /* min-width: 320px; */
+    min-height: 100vh;
+    color: var(--lila-white);
+  }
+
+  .home--display-top {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    overflow-x: auto;
+    margin: 0%;
+    padding: 0%;
+  }
+
+  
+
+  .home--title {
+    color: var(--lila-white);
+    font-size: 24px;
+    font-weight: 300;
+    border-bottom: 1px solid var(--lila-white);
+  }
+
+  .home--card-image {
+    width: 140px;
+    border-radius: 2rem;
+  }
+
+  .home--card-label {
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .home--card-seasons {
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .home--card-genres {
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .home--card-description {
+    font-size: 14px;
+    font-weight: 200;
+  }
+
+  .home--card-updated {
+    font-size: 14px;
+    font-weight: 200;
+  }
