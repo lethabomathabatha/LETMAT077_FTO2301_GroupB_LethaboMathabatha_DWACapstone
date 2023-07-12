@@ -1,0 +1,28 @@
+:root {
+    --purple: #150939;
+    --lila-white: #EEDDEF;
+    --light-purple: #3D2A75;
+}
+
+* {
+    background-color: var(--light-purple);
+}
+
+.login--form {
+    border: 1px solid #EEDDEF;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* #outlined-basic {
+    border: 2px solid var(--lila-white);
+    color: #EEDDEF;
+} */
+
+#standard-basic {
+    color: var(--lila-white);
+}
+
+
