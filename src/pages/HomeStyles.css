@@ -36,6 +36,7 @@
     grid-template-columns: auto 1fr;
     gap: 1rem;
     border-bottom: 1px solid var(--lila-white);
+    padding-bottom: 1px ;
  }
 
  .home--top-title {
@@ -88,4 +89,15 @@
   .home--card-updated {
     font-size: 14px;
     font-weight: 200;
+  }
+
+  /* Genres section */
+
+  .home--genres-title {
+    text-transform: uppercase;
+    color: var(--lila-white);
+    font-size: 14px;    
+    letter-spacing: 3px;
+    font-weight: 400;
+    padding: 0.5rem 2.5rem;
   }
