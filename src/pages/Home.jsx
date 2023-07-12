@@ -35,9 +35,11 @@ export default function Home() {
         <p>Hello! Welcome to Pods App</p>
         <SearchIcon />
     </nav>
-      
 
-      <div className="home--display-top">
+    <div className="home--top-ten">
+        <aside className="home--top-title">Our Top Picks</aside>
+
+        <div className="home--display-top">
         {display.map((data) => {
           return (
             <div key={data.id} className="home--card">
@@ -57,6 +59,11 @@ export default function Home() {
           );
         })}
       </div>
+    </div>
+    
+      
+
+      
     </div>
   );
 }

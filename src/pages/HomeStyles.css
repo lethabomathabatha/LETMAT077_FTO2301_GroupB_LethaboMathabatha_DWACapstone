@@ -1,6 +1,6 @@
 #root {
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0.5rem;
     --purple: #150939;
     --lila-white: #EEDDEF;
     --light-purple: #3D2A75;
@@ -28,10 +28,28 @@
     gap: 1.5rem;
     overflow-x: auto;
     margin: 0%;
-    padding: 0%;
+    padding: 20px 0px 0px 0px;
   }
 
-  
+ .home--top-ten {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--lila-white);
+ }
+
+ .home--top-title {
+    border-right: 1px solid var(--lila-white);
+    writing-mode: vertical-lr;
+    line-height: 1rem;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+    color: var(--lila-white);
+    font-size: 14px;    
+    letter-spacing: 3px;
+ }
+
 
   .home--title {
     color: var(--lila-white);
@@ -41,8 +59,9 @@
   }
 
   .home--card-image {
-    width: 140px;
+    width: 120px;
     border-radius: 2rem;
+    padding: 0px 0px 0px 0px;
   }
 
   .home--card-label {
