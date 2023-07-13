@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search"
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
+import LatestEps from "./LatestEps";
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
@@ -25,7 +26,7 @@ export default function Home() {
             })
         );
 
-       Promise.all(getGenres)
+        Promise.all(getGenres)
           .then((shows) => setDisplay(shows))
           .catch((error) => console.log(error));
       });
@@ -33,7 +34,7 @@ export default function Home() {
 
   }, []);
 
-  // get all shows, then get genres for all
+  
 
   return (
     <div>
@@ -64,20 +65,25 @@ export default function Home() {
         </div>
 
             {/* genres */}
-        {/* <div className="home--genres">
+        <div className="home--genres">
             <h3 className="home--genres-title">Genres</h3>
            
-            {display.map((genre) => {
+            {/* {display.map((data) => {
             return (
-                <div key={genre} className="home--genres-card">
-                  <h2 className="home--genres-button"> 
-                    Genres: {genre}
-                  </h2>
+                <div key={data.title} className="home--genres-card">
+
+                  <button><h2 className="home--genres-button"> 
+                    Genres {data.genres}
+                  </h2></button>
+                  
+
+                 
                 </div>
             );
             })}
-            
-        </div>       */}
+             */}
+        </div>    
+        <LatestEps />  
     </div>
   );
 }
