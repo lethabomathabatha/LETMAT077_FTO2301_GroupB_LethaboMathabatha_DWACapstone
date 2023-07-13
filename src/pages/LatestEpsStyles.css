@@ -23,6 +23,10 @@
 
 /* cards */
 
+.latest--cards {
+    margin: 0px;
+}
+
 .latest--section {
     display: grid;
     grid-template-columns: auto 1fr;
