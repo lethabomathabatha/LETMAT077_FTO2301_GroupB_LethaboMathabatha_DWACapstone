@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./LatestEpsStyles.css"
 
 export default function LatestEps() {
     const [episodes, setEpisodes] = useState([]);
@@ -16,33 +17,38 @@ export default function LatestEps() {
     }, []);
   
     return (
-        <div className="latest-episodes">
-          <h1>Latest Uploads</h1>
+        <div className="latest--section">
+          <aside className="latest--title">Latest Uploads</aside>
           
-          <ul>
+          <div className="latest--cards">
             {episodes.map((episode, index) => {
               const modifiedTitle = episode.title.replace(/&amp;/g, " & ");
       
               return (
-                <div className="latest--cards" key={episode.id}>
+                <div className="latest--card-details" key={episode.id}>
                     <img 
                         src={episode.image}
                         className="latest--card-image"
                         alt="podcast-image"  
                     ></img>
-                    <h4>
-                        {index + 1}. {modifiedTitle} - (
-                        {new Date(episode.updated).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                        })}
-                        ) Now On Season {episode.seasons}
-                    </h4>
+
+                    <div className="latest--card-text">
+                            <span className="latest--card-title">
+                                {index + 1}. {modifiedTitle} 
+                            </span>
+
+                            <span className="latest--card-date">
+                                Updated {new Date(episode.updated).toLocaleDateString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                })} <strong>S{episode.seasons}</strong>
+                            </span>
+                        </div>
                 </div>
               );
             })}
-          </ul>
+          </div>
         </div>
       );
   }
