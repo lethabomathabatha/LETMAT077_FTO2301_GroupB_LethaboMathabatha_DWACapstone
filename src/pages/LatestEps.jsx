@@ -1,36 +1,50 @@
 import { useEffect, useState } from "react";
 
 export default function LatestEps() {
-    const [latestEp, setLatestEp] = useState([]);
-
+    const [episodes, setEpisodes] = useState([]);
+  
     useEffect(() => {
-        fetch("https://podcast-api.netlify.app/shows")
+      fetch("https://podcast-api.netlify.app/shows")
         .then((res) => res.json())
         .then((data) => {
-            setLatestEp(data);
-            console.log(data)
+          const sortedEpisodes = data.sort(
+            (a, b) => new Date(b.updated) - new Date(a.updated)
+          );
+          setEpisodes(sortedEpisodes);
         })
         .catch((error) => console.log(error));
     }, []);
-
+  
     return (
-        <div className="latest--podcasts">
-            <h3>Latest Episodes</h3>
-            
-            {latestEp.map((data) => {
-            return (
-                <div key={data.id} className="latest--card">
-                    
-                    <li className="latest--card-label">{data.title} : {data.updated}</li>
-                    {/* <h2 className="home--card-genres"> <strong>Genres</strong> {data.genres}</h2> */}
-                    
+        <div className="latest-episodes">
+          <h1>Latest Uploads</h1>
+          
+          <ul>
+            {episodes.map((episode, index) => {
+              const modifiedTitle = episode.title.replace(/&amp;/g, " & ");
+      
+              return (
+                <div className="latest--cards" key={episode.id}>
+                    <img 
+                        src={episode.image}
+                        className="latest--card-image"
+                        alt="podcast-image"  
+                    ></img>
+                    <h4>
+                        {index + 1}. {modifiedTitle} - (
+                        {new Date(episode.updated).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                        })}
+                        ) Now On Season {episode.seasons}
+                    </h4>
                 </div>
-            );
+              );
             })}
-           
-            
+          </ul>
         </div>
-        
-
-    )
-}
+      );
+  }
+  
+  
