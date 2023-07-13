@@ -1,0 +1,64 @@
+
+/* latest uploads body*/
+
+.latest--episodes {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--lila-white);
+    padding-bottom: 1px ;
+}
+
+.latest--title {
+    border-right: 1px solid var(--lila-white);
+    writing-mode: vertical-lr;
+    line-height: 1rem;
+    text-align: center;
+    padding: 10px;
+    text-transform: uppercase;
+    color: var(--lila-white);
+    font-size: 14px;    
+    letter-spacing: 3px;
+ }
+
+/* cards */
+
+.latest--section {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    border-top: 1px solid var(--lila-white);
+    padding-bottom: 1px ;
+}
+
+.latest--card-image {
+    width: 60px;
+    border-radius: 0.5rem;
+    padding: 0px 0px 0px 0px;
+  }
+
+.latest--card-title {
+    font-size: 13px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.latest--card-details {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    margin: 0%;
+    padding: 10px 0px 0px 0px;
+    
+}
+
+.latest--card-date {
+    font-size: 12px;
+    font-weight: 200;
+}
+
+
+.latest--card-season {
+    font-size: 12px;
+    font-weight: 200;
+}
