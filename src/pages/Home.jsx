@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search"
+// import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
 
+  // get all shows
   useEffect(() => {
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
 
         // fetch first 10 shows
-        const firstTenShows = data.slice(0, 10);
+        // const firstTenShows = data.slice(0, 10);
 
         // Fetch genre names using each show's id
-        const getGenres = firstTenShows.map((show) =>
+        const getGenres = data.map((show) =>
           fetch(`https://podcast-api.netlify.app/id/${show.id}`)
             .then((res) => res.json())
             .then((showData) => {
@@ -23,11 +25,15 @@ export default function Home() {
             })
         );
 
-        Promise.all(getGenres)
+       Promise.all(getGenres)
           .then((shows) => setDisplay(shows))
           .catch((error) => console.log(error));
       });
+
+
   }, []);
+
+  // get all shows, then get genres for all
 
   return (
     <div>
@@ -49,26 +55,30 @@ export default function Home() {
                         alt="podcast-image"
                     />
                     <h2 className="home--card-label">{data.title}</h2>
-                    {/* <h2 className="home--card-seasons">{data.seasons} Seasons</h2>
-                    <h2 className="home--card-genres"> <strong>Genres</strong> {data.genres}</h2>
-                    <h4 className="home--card-description"><strong>Description</strong> {data.description}</h4>
-                    <h4 className="home--card-updated"><strong>Last updated</strong> {data.updated}</h4>
-                    <br /> */}
+                    {/* <h2 className="home--card-genres"> <strong>Genres</strong> {data.genres}</h2> */}
+                    
                 </div>
             );
             })}
             </div>
         </div>
 
-    <div className="home--genres">
-        <h3 className="home--genres-title">Genres</h3>
-        
-        
-    </div>
-    
-      
-
-      
+            {/* genres */}
+        {/* <div className="home--genres">
+            <h3 className="home--genres-title">Genres</h3>
+           
+            {display.map((genre) => {
+            return (
+                <div key={genre} className="home--genres-card">
+                  <h2 className="home--genres-button"> 
+                    Genres: {genre}
+                  </h2>
+                </div>
+            );
+            })}
+            
+        </div>       */}
     </div>
   );
 }
+
