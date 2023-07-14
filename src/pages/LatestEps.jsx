@@ -1,33 +1,80 @@
 import { useEffect, useState } from "react";
 import "./LatestEpsStyles.css"
-// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Button from '@mui/material/Button';
-// import Select from '@mui/material/Select';
 
 export default function LatestEps() {
     const [episodes, setEpisodes] = useState([]);
+
+    const [sortingTitle, setSortingTitle] = useState("Newest Uploads");
+
+    const [displayedPods, setDisplayedPods] = useState([]);
+    const [visibleCount, setVisibleCount] = useState(10);
   
     useEffect(() => {
       fetch("https://podcast-api.netlify.app/shows")
         .then((res) => res.json())
         .then((data) => {
-          const sortedEpisodes = data.sort(
+
+          const sortedByNewest = data.sort(
             (a, b) => new Date(b.updated) - new Date(a.updated)
           );
-          setEpisodes(sortedEpisodes);
+          setEpisodes(sortedByNewest);
+          setDisplayedPods(sortedByNewest.slice(0, visibleCount));
+          // reduce to 10 results at a time
         })
         .catch((error) => console.log(error));
     }, []);
 
     // function to handle sort dates
-        function toggleSort(e) {
+            // Function to handle sorting by A-Z
+        function sortAZ() {
+            const sortedAZ = [...episodes].sort((a, b) => a.title.localeCompare(b.title));
+            setEpisodes([...sortedAZ]);
+            setDisplayedPods([...sortedAZ.slice(0, visibleCount)]);
+            setSortingTitle("Our A - Z");
             
-            console.log('sorted')
         }
+
+        // Function to handle sorting by Z-A
+        function sortZA() {
+            const sortedZA = [...episodes].sort((a, b) => b.title.localeCompare(a.title));
+            setEpisodes([...sortedZA]);
+            setDisplayedPods([...sortedZA.slice(0, visibleCount)]);
+            setSortingTitle("Our Z - A");
+        }
+
+        // Function to handle sorting by newest to oldest
+        function sortNewToOld() {
+            const sortedNewToOld = [...episodes].sort(
+            (a, b) => new Date(b.updated) - new Date(a.updated)
+            );
+            setEpisodes([...sortedNewToOld]);
+            setDisplayedPods([...sortedNewToOld.slice(0, visibleCount)]);
+            setSortingTitle("Newest Uploads");
+            
+        }
+
+        // Function to handle sorting by oldest to newest
+        function sortOldToNew() {
+            const sortedOldToNew = [...episodes].sort(
+            (a, b) => new Date(a.updated) - new Date(b.updated)
+            );
+            setEpisodes([...sortedOldToNew]);
+            setDisplayedPods([...sortedOldToNew.slice(0, visibleCount)]);
+            setSortingTitle("Oldest Uploads");
+        }
+            
+       function loadMore() {
+           setVisibleCount(visibleCount + 10);
+           console.log(visibleCount);
+       }
   
     return (
         <div className="latest--section">
-            <aside className="latest--title">Latest Uploads</aside>
+            <aside className="latest--title">
+                {/* the name should be dependent on the sorting option selected */}
+                {sortingTitle}
+            </aside>
             
         
           
@@ -35,9 +82,9 @@ export default function LatestEps() {
                 <div className="latest--selection-group">
                     <Button
                         onClick={() => {
-                            toggleSort();
+                            sortNewToOld();
                         }}
-                        variant="outlined"
+                        variant={ sortingTitle === "Newest Uploads" ? "contained" : "outlined" }
                         color="secondary"
                         style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
                         className="latest--selection">   
@@ -46,9 +93,10 @@ export default function LatestEps() {
 
                     <Button
                         onClick={() => {
-                            toggleSort();
+                            sortOldToNew();
+                            // specifically sort by oldest
                         }}
-                        variant="outlined"
+                        variant={ sortingTitle === "Oldest Uploads" ? "contained" : "outlined" }
                         color="secondary"
                         style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
                         className="latest--selection">   
@@ -57,9 +105,10 @@ export default function LatestEps() {
 
                     <Button
                         onClick={() => {
-                            toggleSort();
+                            sortAZ();
+                            // specifically sort by title from A to Z
                         }}
-                        variant="outlined"
+                        variant={ sortingTitle === "Our A - Z" ? "contained" : "outlined" }
                         color="secondary"
                         style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
                         className="latest--selection">   
@@ -68,9 +117,10 @@ export default function LatestEps() {
 
                     <Button
                         onClick={() => {
-                            toggleSort();
+                            sortZA();
+                            // specifically sort by title from Z to A
                         }}
-                        variant="outlined"
+                        variant={ sortingTitle === "Our Z - A" ? "contained" : "outlined" }
                         color="secondary"
                         style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
                         className="latest--selection">   
@@ -78,7 +128,7 @@ export default function LatestEps() {
                     </Button>
                 </div>
 
-            {episodes.map((episode, index) => {
+                {displayedPods.map((episode, index) => {
               const modifiedTitle = episode.title.replace(/&amp;/g, " & ");
       
               return (
@@ -106,6 +156,24 @@ export default function LatestEps() {
                 </div>
               );
             })}
+
+            {displayedPods.length < episodes.length && (
+                <Button 
+                    onClick={loadMore} 
+                    variant="outlined" 
+                    color="secondary" 
+                    style={{ 
+                        color: "var(--lila-white)", 
+                        fontSize: "12px", 
+                        fontWeight: "600", 
+                        width: "100%", 
+                        borderRadius: "15px", 
+                        borderWidth: "2px" 
+                    }}>
+                    Load More
+            </Button>
+            )}
+            
           </div>
         </div>
       );
