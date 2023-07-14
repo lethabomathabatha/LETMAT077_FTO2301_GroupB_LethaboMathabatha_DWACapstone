@@ -81,11 +81,7 @@
     font-weight: 200;
   }
 
-  .home--card-genres {
-    font-size: 14px;
-    font-weight: 200;
-  }
-
+ 
   .home--card-description {
     font-size: 14px;
     font-weight: 200;
@@ -95,6 +91,7 @@
     font-size: 14px;
     font-weight: 200;
   }
+
 
   /* Genres section */
 
@@ -107,7 +104,11 @@
     padding: 0.5rem 2.5rem;
   }
 
- .home--genres-button {
-  color: aliceblue;
-  font-size: 10px;
- }
+
+.home--genres-button-group {
+  margin: 0px 0px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  
+}
+
