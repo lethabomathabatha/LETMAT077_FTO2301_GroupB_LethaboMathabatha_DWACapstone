@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./LatestEpsStyles.css"
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Button from '@mui/material/Button';
+// import Select from '@mui/material/Select';
 
 export default function LatestEps() {
     const [episodes, setEpisodes] = useState([]);
@@ -15,17 +18,72 @@ export default function LatestEps() {
         })
         .catch((error) => console.log(error));
     }, []);
+
+    // function to handle sort dates
+        function toggleSort(e) {
+            
+            console.log('sorted')
+        }
   
     return (
         <div className="latest--section">
-          <aside className="latest--title">Latest Uploads</aside>
+            <aside className="latest--title">Latest Uploads</aside>
+            
+        
           
-          <div className="latest--cards">
+            <div className="latest--cards">
+                <div className="latest--selection-group">
+                    <Button
+                        onClick={() => {
+                            toggleSort();
+                        }}
+                        variant="outlined"
+                        color="secondary"
+                        style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                        className="latest--selection">   
+                        Newest
+                    </Button>
+
+                    <Button
+                        onClick={() => {
+                            toggleSort();
+                        }}
+                        variant="outlined"
+                        color="secondary"
+                        style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                        className="latest--selection">   
+                        Oldest
+                    </Button>
+
+                    <Button
+                        onClick={() => {
+                            toggleSort();
+                        }}
+                        variant="outlined"
+                        color="secondary"
+                        style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                        className="latest--selection">   
+                        A-Z
+                    </Button>
+
+                    <Button
+                        onClick={() => {
+                            toggleSort();
+                        }}
+                        variant="outlined"
+                        color="secondary"
+                        style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                        className="latest--selection">   
+                        Z-A
+                    </Button>
+                </div>
+
             {episodes.map((episode, index) => {
               const modifiedTitle = episode.title.replace(/&amp;/g, " & ");
       
               return (
                 <div className="latest--card-details" key={episode.id}>
+                    
                     <img 
                         src={episode.image}
                         className="latest--card-image"
