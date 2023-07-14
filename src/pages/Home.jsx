@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search"
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
+import Genres from "./Genres";
 import LatestEps from "./LatestEps";
 import { CircularProgress } from "@mui/material";
 
@@ -17,22 +18,12 @@ export default function Home() {
       .then((data) => {
 
         // fetch first 10 shows
-        // const firstTenShows = data.slice(0, 10);
+        const firstTenShows = data.slice(0, 10);
+        setDisplay(firstTenShows);
 
-        // Fetch genre names using each show's id
-        const getGenres = data.map((show) =>
-          fetch(`https://podcast-api.netlify.app/id/${show.id}`)
-            .then((res) => res.json())
-            .then((showData) => {
-              show.genres = showData.genres; 
-              return show;
-            })
-        );
+        setIsLoading(false);
 
-        Promise.all(getGenres)
-          .then((shows) => setDisplay(shows))
-          .catch((error) => console.log(error))
-          .finally(() => setIsLoading(false));
+        
       });
 
 
@@ -48,7 +39,7 @@ export default function Home() {
         </nav>
 
         <div className="home--top-ten">
-            <aside className="home--top-title">Our Top Picks</aside>
+            <aside className="home--top-title">Top 10 Picks</aside>
 
             {isLoading ? (
                 <div className="loading">
@@ -77,24 +68,7 @@ export default function Home() {
         </div>
 
             {/* genres */}
-        <div className="home--genres">
-            <h3 className="home--genres-title">Genres</h3>
-           
-            {/* {display.map((data) => {
-            return (
-                <div key={data.title} className="home--genres-card">
-
-                  <button><h2 className="home--genres-button"> 
-                    Genres {data.genres}
-                  </h2></button>
-                  
-
-                 
-                </div>
-            );
-            })}
-             */}
-        </div>    
+        <Genres />    
         <LatestEps />  
     </div>
   );
