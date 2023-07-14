@@ -6,12 +6,11 @@
     --light-purple: #3D2A75;
     --ice-white: rgba(255, 255, 255, 0.87);
     overflow: hidden;
+    background-color: var(--purple);
     
   }
   
-  * {
-    background-color: var(--purple);
-  }
+  
   
   
   body {
@@ -20,6 +19,12 @@
     /* min-width: 320px; */
     min-height: 100vh;
     color: var(--lila-white);
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .home--display-top {

@@ -2,6 +2,12 @@
 
 /* latest uploads body*/
 
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .latest--episodes {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -15,7 +21,7 @@
     writing-mode: vertical-lr;
     line-height: 1rem;
     text-align: left;
-    padding: 10px;
+    padding: 60px 10px 10px 10px;
     text-transform: uppercase;
     color: var(--lila-white);
     font-size: 14px;    

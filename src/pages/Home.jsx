@@ -3,12 +3,15 @@ import SearchIcon from "@mui/icons-material/Search"
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
 import LatestEps from "./LatestEps";
+import { CircularProgress } from "@mui/material";
+
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   // get all shows
   useEffect(() => {
+    setIsLoading(true);
     fetch("https://podcast-api.netlify.app/shows")
       .then((res) => res.json())
       .then((data) => {
@@ -28,7 +31,8 @@ export default function Home() {
 
         Promise.all(getGenres)
           .then((shows) => setDisplay(shows))
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error))
+          .finally(() => setIsLoading(false));
       });
 
 
@@ -46,6 +50,12 @@ export default function Home() {
         <div className="home--top-ten">
             <aside className="home--top-title">Our Top Picks</aside>
 
+            {isLoading ? (
+                <div className="loading">
+                <CircularProgress color="secondary" /> 
+                </div>
+            ) : (
+            <>
             <div className="home--display-top">
             {display.map((data) => {
             return (
@@ -62,6 +72,8 @@ export default function Home() {
             );
             })}
             </div>
+            </>
+            )}
         </div>
 
             {/* genres */}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./LatestEpsStyles.css"
 import Button from '@mui/material/Button';
+import { CircularProgress } from "@mui/material";
 
 export default function LatestEps() {
     const [episodes, setEpisodes] = useState([]);
@@ -8,9 +9,13 @@ export default function LatestEps() {
     const [sortingTitle, setSortingTitle] = useState("Newest Uploads");
 
     const [displayedPods, setDisplayedPods] = useState([]);
+
     const [visibleCount, setVisibleCount] = useState(10);
+
+    const [isLoading, setIsLoading] = useState(true);
   
     useEffect(() => {
+        setIsLoading(true);
       fetch("https://podcast-api.netlify.app/shows")
         .then((res) => res.json())
         .then((data) => {
@@ -19,11 +24,11 @@ export default function LatestEps() {
             (a, b) => new Date(b.updated) - new Date(a.updated)
           );
           setEpisodes(sortedByNewest);
-          setDisplayedPods(sortedByNewest.slice(0, visibleCount));
-          // reduce to 10 results at a time
+          setDisplayedPods(sortedByNewest.slice(0, visibleCount))
         })
-        .catch((error) => console.log(error));
-    }, []);
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    }, [visibleCount]);
 
     // function to handle sort dates
             // Function to handle sorting by A-Z
@@ -32,7 +37,6 @@ export default function LatestEps() {
             setEpisodes([...sortedAZ]);
             setDisplayedPods([...sortedAZ.slice(0, visibleCount)]);
             setSortingTitle("Our A - Z");
-            
         }
 
         // Function to handle sorting by Z-A
@@ -71,13 +75,19 @@ export default function LatestEps() {
   
     return (
         <div className="latest--section">
+             
             <aside className="latest--title">
                 {/* the name should be dependent on the sorting option selected */}
                 {sortingTitle}
             </aside>
             
         
-          
+            {isLoading ? (
+                <div className="loading">
+                <CircularProgress color="secondary" /> 
+                </div>
+            ) : (
+            <>  
             <div className="latest--cards">
                 <div className="latest--selection-group">
                     <Button
@@ -175,6 +185,8 @@ export default function LatestEps() {
             )}
             
           </div>
+          </>
+            )}
         </div>
       );
   }
