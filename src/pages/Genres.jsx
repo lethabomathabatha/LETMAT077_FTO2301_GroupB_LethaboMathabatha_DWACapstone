@@ -52,7 +52,7 @@ export default function Genres() {
             ) : (
             <>  
       {genreButtons.map((genre) => (
-        <div key={genre} className="home--genres-button-group">
+        <div key={genre}>
             <Button 
             key={genre}
             variant="contained"
@@ -64,8 +64,9 @@ export default function Genres() {
                 backgroundColor: "var(--ice-white)",
                 fontSize: "11px",
                 height: "35px",
-                width: "100px",                
-            }}>
+                whiteSpace: "nowrap",
+            }}
+            >
             {genre}
             </Button>
         </div>

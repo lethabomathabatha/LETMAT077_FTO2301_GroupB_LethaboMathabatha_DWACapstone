@@ -81,7 +81,11 @@
     font-weight: 200;
   }
 
- 
+  /* .home--card-genres {
+    font-size: 14px;
+    font-weight: 200;
+  } */
+
   .home--card-description {
     font-size: 14px;
     font-weight: 200;
@@ -106,9 +110,10 @@
 
 
 .home--genres-button-group {
-  margin: 0px 0px 5px 10px;
+  margin: 0px 0px 10px 5px;
   display: flex;
-  flex-direction: row;
-  
+  overflow-x: scroll;
+  overflow-y: hidden;
+  gap: 0.5rem;
 }
 
