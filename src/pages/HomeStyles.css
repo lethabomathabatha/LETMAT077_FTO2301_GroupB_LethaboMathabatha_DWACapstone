@@ -27,6 +27,23 @@
     align-items: center;
   }
 
+
+  .home--navigation {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px 15px 10px;
+    
+  }
+
+  .home--search {
+    color: var(--ice-white);
+    background-color: var(--light-purple);
+    border-radius: 5px;
+    width: 80%;
+    align-self: center;
+  }
+
+
   .home--display-top {
     display: flex;
     flex-direction: row;
@@ -41,6 +58,7 @@
     grid-template-columns: auto 1fr;
     gap: 1rem;
     border-bottom: 1px solid var(--lila-white);
+    border-top: 1px solid var(--lila-white);
     padding-bottom: 1px ;
  }
 
@@ -61,7 +79,7 @@
     color: var(--lila-white);
     font-size: 24px;
     font-weight: 300;
-    border-bottom: 1px solid var(--lila-white);
+    height: 15px;
   }
 
   .home--card-image {

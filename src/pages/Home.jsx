@@ -5,7 +5,9 @@ import '/src/pages/HomeStyles.css'
 import Genres from "./Genres";
 import LatestEps from "./LatestEps";
 import { CircularProgress } from "@mui/material";
-
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import Box from "@mui/material/Box";
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
@@ -33,9 +35,25 @@ export default function Home() {
 
   return (
     <div>
-        <nav className="home--title">
-            <p>Hello! Welcome to Pods App</p>
-            <SearchIcon />
+        <nav className="home--navigation">
+            <p className="home--title">Hello! Welcome to Pods App</p>
+            <TextField
+              className="home--search"
+              
+              color="secondary"
+              
+              placeholder="Search"
+              size="small"
+
+              InputProps={{ 
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+
+                  </InputAdornment>
+                ),
+              }}
+            />
         </nav>
 
         <div className="home--top-ten">
