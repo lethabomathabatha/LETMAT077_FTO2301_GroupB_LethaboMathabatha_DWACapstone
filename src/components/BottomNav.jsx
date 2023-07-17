@@ -8,18 +8,25 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 
 
 export default function BottomNav() {
-const [homeIconColor, setHomeIconColor] = useState("#3D2A75");
+const [iconColor, setIconColor] = useState("");
 
     function sendToHome() {
         window.location.href = "/";
-        setHomeIconColor("#3D2A75");
+        setIconColor("#3D2A75");
 
         // change icon color
         // document.getElementsByClassName("home--icon")[0].style.color = "#3D2A75";
 
     }
+
+    function sendToSearch() {
+        window.location.href = "/search";
+        setIconColor("#3D2A75");
+    }
+
     function sendToLogin() {
         window.location.href = "/login";
+        setIconColor("#3D2A75");
     }
 
     return (
@@ -27,25 +34,26 @@ const [homeIconColor, setHomeIconColor] = useState("#3D2A75");
           <HomeOutlinedIcon 
             className="home--icon"
             onClick={sendToHome}
-            style={{cursor: "pointer", color: homeIconColor}}
+            style={{cursor: "pointer", color: iconColor}}
     
           />
 
           <SearchIcon 
             className="search--icon"
-            style={{cursor: "pointer"}} 
+            onClick={sendToSearch}
+            style={{cursor: "pointer", color: iconColor}}
           />
 
           <FavoriteBorderOutlinedIcon
             className="favorite--icon"
-            style={{cursor: "pointer"}}
+            style={{cursor: "pointer", color: iconColor}}
           />
 
           <PermIdentityOutlinedIcon 
             className="profile--icon"
             // onClick, take the user to /login
             onClick={sendToLogin}
-            style={{cursor: "pointer"}}
+            style={{cursor: "pointer", color: iconColor}}
           />
         </div>
     )

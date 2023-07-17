@@ -27,23 +27,6 @@ export default function TopNav() {
           style={{fontSize: 15}}
         />
       </p>
-      {/* <TextField
-        className="home--search"
-        
-        color="secondary"
-        
-        placeholder="Search"
-        size="small"
-
-        InputProps={{ 
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-
-            </InputAdornment>
-          ),
-        }}
-      /> */}
   </nav>
   )
 }
