@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search"
+
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
 import Genres from "./Genres";
@@ -8,11 +8,9 @@ import { CircularProgress } from "@mui/material";
 // import TextField from "@mui/material/TextField";
 // import InputAdornment from "@mui/material/InputAdornment";
 // import Box from "@mui/material/Box";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 
-
+import BottomNav from '../components/BottomNav'
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
@@ -43,13 +41,13 @@ export default function Home() {
   // if it's before 12pm, it's morning, if it's after 12pm but before 6pm, it's afternoon, if it's after 6pm but before 3am, it's evening
   let greeting = "";
   if (time >= 3 && time < 12) {
-    greeting = `Good Morning, ${user}.`;
+    greeting = `Good Morning, ${user} `;
   } else if (time >= 12 && time < 18) {
-    greeting = `Good Afternoon, ${user}.`;
+    greeting = `Good Afternoon, ${user} `;
   } else if (time >= 18 && time < 24) {
-    greeting = `Good Evening, ${user}.`;
+    greeting = `Good Evening, ${user} `;
   } else {
-    greeting = `Good Night, ${user}.`;
+    greeting = `Good Night, ${user} `;
   }
 
   
@@ -58,7 +56,11 @@ export default function Home() {
     <div>
         <nav className="home--navigation">
           <img src="../pods-logo-light.png" width="70px" className="home--logo"/>
-            <p className="home--title">{greeting}</p>
+            <p className="home--title">{greeting} 
+              <WbSunnyOutlinedIcon 
+                style={{fontSize: 15}}
+              />
+            </p>
             {/* <TextField
               className="home--search"
               
@@ -111,13 +113,7 @@ export default function Home() {
         <Genres />    
         <LatestEps />  
 
-        <div className="home--bottom-nav">
-          <HomeOutlinedIcon />
-          <SearchIcon />
-          <FavoriteBorderOutlinedIcon />
-          <PermIdentityOutlinedIcon />
-          {/* <p className="home--bottom-nav-title">© 2022 Pods</p> */}
-        </div>
+        <BottomNav />
     </div>
   );
 }
