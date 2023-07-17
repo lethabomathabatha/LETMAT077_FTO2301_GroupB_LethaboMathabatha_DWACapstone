@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
-import Genres from "./Genres";
+
 import LatestEps from "./LatestEps";
 import { CircularProgress } from "@mui/material";
 // import TextField from "@mui/material/TextField";
@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 // import Box from "@mui/material/Box";
 
 import BottomNav from '../components/BottomNav'
+import Genres from "../components/Genres";
 import TopNav from '../components/TopNav';
 
 export default function Home() {

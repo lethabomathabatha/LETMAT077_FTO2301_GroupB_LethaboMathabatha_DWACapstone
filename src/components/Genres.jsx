@@ -4,6 +4,7 @@ import '/src/pages/HomeStyles.css'
 import { CircularProgress } from "@mui/material";
 
 
+
 export default function Genres() {
   const [genreButtons, setGenreButtons] = useState([]);
 
