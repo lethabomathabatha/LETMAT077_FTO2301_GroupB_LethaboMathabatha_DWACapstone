@@ -34,7 +34,7 @@
     align-items: center;
     width: 95%;
     position: fixed;
-    top: 0;
+    top: 0px;
     backdrop-filter: blur(9px);
     border-bottom: 1px solid var(--lila-white);
   }
@@ -66,7 +66,7 @@
     border-bottom: 1px solid var(--lila-white);
     border-top: 1px solid var(--lila-white);
     padding-bottom: 1px ;
-    margin-top: 82px;
+    margin-top: 62px;
  }
 
  .home--top-title {
@@ -142,3 +142,19 @@
   gap: 0.5rem;
 }
 
+/* bottom nav */
+
+.home--bottom-nav {
+  background-color: var(--purple);
+  position: fixed;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  box-shadow: 0 -2px 6px rgba(165, 164, 165, 0.1);
+  border-top: 1px solid var(--lila-white);
+}

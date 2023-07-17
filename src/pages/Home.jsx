@@ -5,9 +5,14 @@ import '/src/pages/HomeStyles.css'
 import Genres from "./Genres";
 import LatestEps from "./LatestEps";
 import { CircularProgress } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
+// import TextField from "@mui/material/TextField";
+// import InputAdornment from "@mui/material/InputAdornment";
 // import Box from "@mui/material/Box";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+
+
 
 export default function Home() {
   const [display, setDisplay] = useState([]);
@@ -52,7 +57,7 @@ export default function Home() {
   return (
     <div>
         <nav className="home--navigation">
-          <img src="../pods-logo-light.png" width="90px" className="home--logo"/>
+          <img src="../pods-logo-light.png" width="70px" className="home--logo"/>
             <p className="home--title">{greeting}</p>
             {/* <TextField
               className="home--search"
@@ -105,7 +110,14 @@ export default function Home() {
             {/* genres */}
         <Genres />    
         <LatestEps />  
-        <div className="home--bottom-nav"></div>
+
+        <div className="home--bottom-nav">
+          <HomeOutlinedIcon />
+          <SearchIcon />
+          <FavoriteBorderOutlinedIcon />
+          <PermIdentityOutlinedIcon />
+          {/* <p className="home--bottom-nav-title">© 2022 Pods</p> */}
+        </div>
     </div>
   );
 }
