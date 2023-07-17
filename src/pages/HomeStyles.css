@@ -29,12 +29,17 @@
 
 
   .home--navigation {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 10px 15px 10px;
-    
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    position: fixed;
+    top: 0;
+    backdrop-filter: blur(9px);
+    border-bottom: 1px solid var(--lila-white);
   }
 
+  
   .home--search {
     color: var(--ice-white);
     background-color: var(--light-purple);
@@ -51,6 +56,7 @@
     overflow-x: auto;
     margin: 0%;
     padding: 20px 0px 0px 0px;
+    
   }
 
  .home--top-ten {
@@ -60,6 +66,7 @@
     border-bottom: 1px solid var(--lila-white);
     border-top: 1px solid var(--lila-white);
     padding-bottom: 1px ;
+    margin-top: 82px;
  }
 
  .home--top-title {
@@ -77,8 +84,8 @@
 
   .home--title {
     color: var(--lila-white);
-    font-size: 24px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 500;
     height: 15px;
   }
 
