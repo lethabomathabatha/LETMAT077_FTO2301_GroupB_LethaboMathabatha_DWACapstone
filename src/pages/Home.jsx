@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // import * as Mui from "@mui/material";
 import '/src/pages/HomeStyles.css'
 
-import LatestEps from "./LatestEps";
+import LatestEps from "../components/LatestEps";
 import { CircularProgress } from "@mui/material";
 // import TextField from "@mui/material/TextField";
 // import InputAdornment from "@mui/material/InputAdornment";
