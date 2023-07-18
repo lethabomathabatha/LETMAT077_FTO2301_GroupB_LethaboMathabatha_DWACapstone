@@ -73,30 +73,32 @@ export default function Search() {
     return (
       <div className="search--page">
         
-        <p className="search--header">
-          Search For The Next <strong>Best Podcast</strong> You Have Ever Heard
-        </p>
+        <header className="search--header">
+            <img src="./public/podcast-bg.png" alt="podcast-background" width={"100%"} className="search--header-image"/>
+            <p className="search--header-title">Search For The Next <strong>Best Podcast</strong> You`ve Ever Heard</p>
+
+            <TextField
+                className="search--field"
+                color="secondary"
+                placeholder="Search"
+                size="small"
+                value={searchTerm}
+                onChange={handleInputChange}
+                InputProps={{
+                startAdornment: 
+                <SearchIcon 
+                    onClick={handleSearch}
+                />
+                
+                }}
+            />
+
+        </header>
   
-        <div className="search--input">
-          <TextField
-            className="home--search-field"
-            color="secondary"
-            placeholder="Search"
-            size="large"
-            variant="standard"
-            
-            value={searchTerm}
-            onChange={handleInputChange}
-            InputProps={{
-              startAdornment: 
-              <SearchIcon 
-                onClick={handleSearch}
-              />
-              
-            }}
-          />
+        
           
-        </div>
+          
+        
             
         {isLoading ? (
                 <div className="loading">
