@@ -1,4 +1,6 @@
-
+:root {
+    --lilac: #9a8dc2;
+}
 /* page body*/
 .search--page {
     margin: 0;
@@ -17,8 +19,7 @@
     filter: blur(1px);
  }
 
-
-  .search--header-title {
+.search--header-title {
     position: absolute;
     top: 40%;
     left: 0%;
@@ -29,7 +30,7 @@
     font-weight: 300;
     text-shadow: var(--purple) 10px 10px 40px;
     margin: 2rem 1rem 0rem 1rem;
-  }
+}
 
 .search--field {
     background-color: var(--lila-white);
@@ -52,72 +53,51 @@
 
 .search--results {
     margin-top: 15px;
+    margin-bottom: 100px;
 }
 
 .search--results-cards {
     padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--lila-white);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border-bottom: 1px solid var(--light-purple);
     padding: 10px;
-    height: 100px;
+    height: 60px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
-    font-weight: 300;
-    
 }
 
 .search--results-image {
-    width: 50px;
+    width: 60px;
     border-radius: 0.5rem;
   }
 
-.search--results-description {
+.search--results-text {
     display: flex;
-    flex-direction: row;
-    /* overflow-x: auto; */
-    /* margin: 0%; */
-    padding: 10px 0px 10px 0px;
-    font-size: 14px;
+    flex-direction: column;
+    padding-left: 1rem;
 }
 
 .search--results-title {
     font-size: 14px;
     font-weight: 500;
-    text-align: left;
 }
 
-.search--results-text {
+.search--results-date-genres {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lilac);
+}
+
+.search--results-description {
     font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    
+    font-weight: 200;
+    color: var(--lila-white);
+    width: 270px;
+    overflow: hidden;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 
-
-/* .latest--card-details {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    margin: 0%;
-    padding: 10px 0px 0px 0px;
-    
-} */
-
-.search--results-updated {
-    font-size: 12px;
-    font-weight: 200;
-}
-
-
-/* .latest--card-season {
-    font-size: 12px;
-    font-weight: 200;
-} */
-
-.search--results-genres {
-    font-size: 12px;
-    font-weight: 200;
-}

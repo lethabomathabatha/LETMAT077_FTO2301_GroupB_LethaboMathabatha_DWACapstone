@@ -59,7 +59,7 @@ export default function Search() {
       setIsLoading(true)
       const fuse = new Fuse(shows, {
         keys: [
-            'title', 'id', 'description', 'updated'],
+            'title', 'id', 'description', 'updated', 'genres'],
       });
   
       const searchResults = fuse.search(searchTerm);
@@ -85,14 +85,12 @@ export default function Search() {
                 value={searchTerm}
                 onChange={handleInputChange}
                 InputProps={{
-                startAdornment: 
-                <SearchIcon 
-                    onClick={handleSearch}
-                />
-                
+                    startAdornment: 
+                    <SearchIcon 
+                        onClick={handleSearch}
+                    />
                 }}
             />
-
         </header>
   
         
@@ -112,25 +110,22 @@ export default function Search() {
               {searchResults.map((result) => (
                 
                 <div key={result.item.id} className="search--results-cards">
-                    <header className="search--results-header">
-                        <img src={result.item.image} alt="podcast-image" className="search--results-image"/>
-                        <p className="search--results-updated">{new Date(result.item.updated).toLocaleDateString("en-GB", {
+                   <img src={result.item.image} alt="podcast-image" className="search--results-image"/>
+                        
+                    <div className="search--results-text">
+                        <span className="search--results-title">{result.item.title.replace(/&amp;/g, " & ")}</span>
+                        <span className="search--results-date-genres">Updated {new Date(result.item.updated).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "numeric",
-                        })}  
-                        </p>
-                        <span className="search--results-title">{result.item.title.replace(/&amp;/g, " & ")}</span>
-                    </header>
+                        })}  | {result.item.genres.map((genreId) => (genreId)).join(", ")}
+                        </span>
+                        <span>{result.item.genre}</span>
+                        <p className="search--results-description">{result.item.description} </p>
+                    </div>
+
                     {/* <p className="search--results-genres">Genres: {result.item.genres.map((genreId) => getGenreName(genreId)).join(", ")}</p> */}
                     {/* add ellipsis to description if too long */}
-
-                    <div className="search--results-text">
-                        
-                        <p className="search--results-description">{result.item.description}  </p>
-                        
-                    </div>
-                    
                 </div>
                 
               ))}
