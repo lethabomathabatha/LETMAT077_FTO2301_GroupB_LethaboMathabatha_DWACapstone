@@ -6,9 +6,12 @@
     
 }
 
-.search--header {
-    font-size: 25px;
-    font-weight: 100;
+.search--results-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    
 }
 
 .home--search-field {
@@ -22,4 +25,82 @@
     border-radius: 15px;
     padding: 1px;
     width: 100%;
+}
+
+/* .search--results-description {
+    text-overflow: ellipsis;
+} */
+
+/* results */
+
+.search--results {
+    margin-top: 15px;
+}
+
+.search--results-cards {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--lila-white);
+    padding: 10px;
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 300;
+    
+}
+
+.search--results-image {
+    width: 50px;
+    border-radius: 0.5rem;
+  }
+
+.search--results-description {
+    display: flex;
+    flex-direction: row;
+    /* overflow-x: auto; */
+    /* margin: 0%; */
+    padding: 10px 0px 10px 0px;
+    font-size: 14px;
+}
+
+.search--results-title {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.search--results-text {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+
+/* .latest--card-details {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    margin: 0%;
+    padding: 10px 0px 0px 0px;
+    
+} */
+
+.search--results-updated {
+    font-size: 12px;
+    font-weight: 200;
+}
+
+
+/* .latest--card-season {
+    font-size: 12px;
+    font-weight: 200;
+} */
+
+.search--results-genres {
+    font-size: 12px;
+    font-weight: 200;
 }
