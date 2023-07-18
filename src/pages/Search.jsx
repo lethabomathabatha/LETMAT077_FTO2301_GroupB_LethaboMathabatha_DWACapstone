@@ -14,7 +14,7 @@ export default function Search() {
     const [shows, setShows] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    // const [showGenres, setShowGenres] = useState([]);
+    // const [displayedGenres, setDisplayedGenres] = useState([]);
     const [isLoading,setIsLoading] = useState(true)
   
     useEffect(() => {
@@ -30,31 +30,28 @@ export default function Search() {
 
 
     // get the names of the genres from https://podcast-api.netlify.app/id/{show.id}
-    // after fetching the genres as numbers from each show, set them to an empty array to be later converted to a text array
-    // use the individual show id, then use them to fetch the genres from https://podcast-api.netlify.app/genres/{show.id}
-    // display the genres as per the return structure
+   
 
     // Fetch the genres:
-    const fetchGenres = async (showId) => {
-        const res = await fetch(`https://podcast-api.netlify.app/genres/${showId}`);
-        const genreData = await res.json();
-        return genreData.genres.map((genre) => genre.name);        
-    }
-
-    useEffect(() => {
-        const fetchGenreNames = async () => {
-          const updatedResults = await Promise.all(
-            searchResults.map(async (result) => {
-              const genreNames = await fetchGenres(result.item.id);
-              return { ...result, item: { ...result.item, genres: genreNames } };
-            })
-          );
-          setSearchResults(updatedResults);
-        };
+    // useEffect(() => {
+    //     fetch("https://podcast-api.netlify.app/shows")
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         const getAllGenres = data.map((show) =>
+    //           fetch(`https://podcast-api.netlify.app/id/${show.id}`)
+    //             .then((res) => res.json())
+    //             .then((showData) => {
+    //               show.genres = showData.genres;
+    //               return show;
+    //             })
+    //         );
     
-        fetchGenreNames();
-      }, [searchResults]);
-  
+    //         Promise.all(getAllGenres)
+    //           .then((shows) => setDisplayedGenres(shows))
+    //           .catch((error) => console.log(error));
+    //       });
+    //   }, []);
+
     const handleInputChange = (event) => {
       setSearchTerm(event.target.value);
 
@@ -64,7 +61,7 @@ export default function Search() {
       setIsLoading(true)
       const fuse = new Fuse(shows, {
         keys: [
-            'title', 'id', 'description', 'updated', 'genres'],
+            'title', 'id', 'description', 'updated', 'genres', 'seasons'],
       });
   
       const searchResults = fuse.search(searchTerm);
@@ -73,8 +70,9 @@ export default function Search() {
       setIsLoading(false)
     };
   
-    const displayOverlay = () => {
-        console.log("display");
+    const displayOverlay = (podcast) => {
+        
+        console.log(podcast);
     }
     
 
@@ -121,15 +119,12 @@ export default function Search() {
                             day: "2-digit",
                             month: "short",
                             year: "numeric",
-                        })}  | {result.item.genres.join(", ")}
+                        })}  | Genre: {result.item.genres.map((genre) => genre.name).join(", ")}
                         </span>
                         
                         <p className="search--results-description">{result.item.description} </p>
                     </div>
 
-                    {/* <p className="search--results-genres">Genres: {result.item.genres.map((genreId) => getGenreName(genreId)).join(", ")}</p> */}
-                    {/* add ellipsis to description if too long */}
-                    
                 </div>     
               ))}
             </div>
