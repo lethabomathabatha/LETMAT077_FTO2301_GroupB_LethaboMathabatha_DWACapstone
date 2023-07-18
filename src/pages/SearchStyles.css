@@ -40,15 +40,6 @@
     box-shadow: var(--light-purple) 0px 0px 10px 1px; 
 }
 
-
-
-
-
-
-/* .search--results-description {
-    text-overflow: ellipsis;
-} */
-
 /* results */
 
 .search--results {
@@ -62,8 +53,9 @@
     grid-template-columns: auto 1fr;
     border-bottom: 1px solid var(--light-purple);
     padding: 10px;
-    height: 60px;
+    height: 80px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .search--results-image {
@@ -75,7 +67,7 @@
     display: flex;
     flex-direction: column;
     padding-left: 1rem;
-}
+    justify-content: center;}
 
 .search--results-title {
     font-size: 14px;
@@ -97,7 +89,6 @@
     position: relative;
     text-overflow: ellipsis;
     white-space: nowrap;
-    cursor: pointer;
 }
 
 
