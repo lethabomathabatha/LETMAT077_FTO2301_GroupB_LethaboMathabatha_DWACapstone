@@ -6,8 +6,7 @@ import '/src/pages/HomeStyles.css'
 import BottomNav from "../components/BottomNav"
 
 import TextField from "@mui/material/TextField"
-import { CircularProgress } from "@mui/material";
-// import InputAdornment from "@mui/material/InputAdornment"
+import { CircularProgress } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import Fuse from "fuse.js"
 
@@ -30,31 +29,37 @@ export default function Search() {
     }, []);
 
 
-    // const getGenreName = (genreId) => {
-    //     const genre = showGenres.find((genre) => genre.id === genreId);
-    //     return genre ? genre.name : '';
-    // };
+    // get the names of the genres from https://podcast-api.netlify.app/id/{show.id}
+    // after fetching the genres as numbers from each show, set them to an empty array to be later converted to a text array
+    // use the individual show id, then use them to fetch the genres from https://podcast-api.netlify.app/genres/{show.id}
+    // display the genres as per the return structure
 
-    // get genres using the show id: https://podcast-api.netlify.app/id/{show.id}
-    /*useEffect(() => {
-        if (shows.length > 0) {
-        fetch(`https://podcast-api.netlify.app/id/${shows[0].id}`) 
-        .then((res) => res.json())
-        .then((data) => {
-            setShowGenres(data)
-        })
-        .catch((error) => console.log(error))
+    // Fetch the genres:
+    const fetchGenres = async (showId) => {
+        const res = await fetch(`https://podcast-api.netlify.app/genres/${showId}`);
+        const genreData = await res.json();
+        return genreData.genres.map((genre) => genre.name);        
+    }
 
-}}, [shows]*/
-
+    useEffect(() => {
+        const fetchGenreNames = async () => {
+          const updatedResults = await Promise.all(
+            searchResults.map(async (result) => {
+              const genreNames = await fetchGenres(result.item.id);
+              return { ...result, item: { ...result.item, genres: genreNames } };
+            })
+          );
+          setSearchResults(updatedResults);
+        };
+    
+        fetchGenreNames();
+      }, [searchResults]);
   
     const handleInputChange = (event) => {
       setSearchTerm(event.target.value);
 
     };
 
-   
-  
     const handleSearch = () => {
       setIsLoading(true)
       const fuse = new Fuse(shows, {
@@ -68,6 +73,9 @@ export default function Search() {
       setIsLoading(false)
     };
   
+    const displayOverlay = () => {
+        console.log("display");
+    }
     
 
     return (
@@ -93,11 +101,6 @@ export default function Search() {
             />
         </header>
   
-        
-          
-          
-        
-            
         {isLoading ? (
                 <div className="loading">
                 <CircularProgress color="secondary" /> 
@@ -109,7 +112,7 @@ export default function Search() {
           <div className="search--results">
               {searchResults.map((result) => (
                 
-                <div key={result.item.id} className="search--results-cards">
+                <div key={result.item.id} className="search--results-cards" onClick={displayOverlay}>
                    <img src={result.item.image} alt="podcast-image" className="search--results-image"/>
                         
                     <div className="search--results-text">
@@ -118,16 +121,16 @@ export default function Search() {
                             day: "2-digit",
                             month: "short",
                             year: "numeric",
-                        })}  | {result.item.genres.map((genreId) => (genreId)).join(", ")}
+                        })}  | {result.item.genres.join(", ")}
                         </span>
-                        <span>{result.item.genre}</span>
+                        
                         <p className="search--results-description">{result.item.description} </p>
                     </div>
 
                     {/* <p className="search--results-genres">Genres: {result.item.genres.map((genreId) => getGenreName(genreId)).join(", ")}</p> */}
                     {/* add ellipsis to description if too long */}
-                </div>
-                
+                    
+                </div>     
               ))}
             </div>
         )}
