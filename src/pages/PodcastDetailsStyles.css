@@ -60,3 +60,35 @@
     border-bottom: 1px solid var(--light-purple);
     padding-bottom: 40px;
   }
+
+/* seasons and genres */
+
+.details--section {
+    display: grid;
+    grid-template-columns: auto auto;
+    border: 1px solid yellow;
+}
+
+.details--season-title {
+    border-right: 1px solid var(--light-purple);
+    writing-mode: vertical-lr;
+    line-height: 1rem;
+    text-align: left;
+    padding: 50px 10px 10px 10px; 
+    text-transform: uppercase;
+    color: var(--lila-white);
+    font-size: 14px;    
+    letter-spacing: 3px;
+}
+
+.details--show-cards {
+    border: 1px solid palevioletred;
+}
+  
+
+
+
+ .latest--selection-group {
+    display: flex;
+    gap: 12px
+ }
