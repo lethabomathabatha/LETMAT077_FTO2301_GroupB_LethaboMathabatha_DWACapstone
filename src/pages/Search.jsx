@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+// import { Link } from "react-router-dom"
 
 import '/src/pages/SearchStyles.css'
 import '/src/pages/HomeStyles.css'
+// import PodcastDetails from "./PodcastDetails";
 
 import BottomNav from "../components/BottomNav"
 
@@ -29,29 +31,7 @@ export default function Search() {
     }, []);
 
 
-    // get the names of the genres from https://podcast-api.netlify.app/id/{show.id}
-   
-
-    // Fetch the genres:
-    // useEffect(() => {
-    //     fetch("https://podcast-api.netlify.app/shows")
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         const getAllGenres = data.map((show) =>
-    //           fetch(`https://podcast-api.netlify.app/id/${show.id}`)
-    //             .then((res) => res.json())
-    //             .then((showData) => {
-    //               show.genres = showData.genres;
-    //               return show;
-    //             })
-    //         );
-    
-    //         Promise.all(getAllGenres)
-    //           .then((shows) => setDisplayedGenres(shows))
-    //           .catch((error) => console.log(error));
-    //       });
-    //   }, []);
-
+  
     const handleInputChange = (event) => {
       setSearchTerm(event.target.value);
 
@@ -70,12 +50,11 @@ export default function Search() {
       setIsLoading(false)
     };
   
-    const displayOverlay = (podcast) => {
-        
-        console.log(podcast);
+    const getPodcastDetails = (result) => {
+      window.location.href = `/search/${result.item.id}`;
+      console.log('podcast details');
     }
     
-
     return (
       <div className="search--page">
         
@@ -110,7 +89,8 @@ export default function Search() {
           <div className="search--results">
               {searchResults.map((result) => (
                 
-                <div key={result.item.id} className="search--results-cards" onClick={displayOverlay}>
+                <div key={result.item.id} className="search--results-cards" onClick={() => getPodcastDetails(result)} >
+                  
                    <img src={result.item.image} alt="podcast-image" className="search--results-image"/>
                         
                     <div className="search--results-text">
@@ -119,7 +99,7 @@ export default function Search() {
                             day: "2-digit",
                             month: "short",
                             year: "numeric",
-                        })}  | Genre: {result.item.genres.map((genre) => genre.name).join(", ")}
+                        })}  | Genre: {result.item.genres.map((genre) => genre.name).join(", ")} | S{result.item.seasons}
                         </span>
                         
                         <p className="search--results-description">{result.item.description} </p>
