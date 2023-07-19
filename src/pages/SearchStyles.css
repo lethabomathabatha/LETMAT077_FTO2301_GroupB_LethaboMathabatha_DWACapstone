@@ -84,7 +84,7 @@
     font-size: 14px;
     font-weight: 200;
     color: var(--lila-white);
-    width: 270px;
+    max-width: 220px;
     overflow: hidden;
     position: relative;
     text-overflow: ellipsis;
