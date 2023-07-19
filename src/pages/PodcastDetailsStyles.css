@@ -1,0 +1,62 @@
+.details--page {
+    margin: 0;
+    padding: 0;
+}
+
+.details--header {
+    position: relative;
+    border-bottom: var(--light-purple) 1px solid;
+    padding-bottom: 1rem;
+}
+
+.details--header-image {
+    display: block;
+    width: 100%;
+    filter: blur(1px);
+}
+
+.details--header-title {
+    position: absolute;
+    top: 5%;
+    left: 0%;
+    color: var(--lila-white);
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    font-weight: 500;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.details--header-pod-image {
+    width: 7rem;
+    border-radius: 20px;
+    border: 5px solid var(--lila-white);
+    transform: translate(100%, -100%);
+    position: absolute;
+}
+
+.details--header-description {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--lilac);
+    padding: 10px ;
+    text-align:justify;
+}
+
+.details--header-seasons-genres {
+    font-size: 14px;
+    color: var(--lila-white);
+    font-weight: 500;
+    text-align: center;
+}
+
+.details--seasons-btns {
+    margin: 0px 0px 10px 5px;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--light-purple);
+    padding-bottom: 40px;
+  }
