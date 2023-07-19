@@ -1,5 +1,9 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import BottomNav from '../components/BottomNav';
+import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
+import PauseTwoToneIcon from '@mui/icons-material/PauseTwoTone';
+
 
 
 export default function PodcastDetails() {
@@ -48,15 +52,14 @@ export default function PodcastDetails() {
                             <br/>
                         </div>
                     ))}
-
-
-
-
-                    {/* <p>Play here: {selectedPodcast.url}</p> */}
                 </div>
 
             )}
 
+            {/*  */}
+
+
+            <BottomNav/>
         </div>
     )
 }
