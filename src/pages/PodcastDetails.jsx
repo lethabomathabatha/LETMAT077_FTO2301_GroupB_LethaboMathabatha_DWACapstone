@@ -147,6 +147,8 @@ export default function PodcastDetails() {
                                         <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | {duration}</span>
                                         {/* audio file length */}
                                         {/* <audio src={episode.file}  controls preload="none"></audio> */}
+                                        {/* ACTION: only play/pause for the selected episode */}
+
                                         <PlayCircleOutlineTwoToneIcon 
                                             className="details--audio-btn"
                                             onClick={() => handlePlayPause()}
