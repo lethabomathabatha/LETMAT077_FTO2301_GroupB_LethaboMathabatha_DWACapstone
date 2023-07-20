@@ -7,7 +7,8 @@
     --ice-white: rgba(255, 255, 255, 0.87);
     overflow: hidden;
     background-color: var(--purple);
-    
+    --gradient-purple: linear-gradient(90deg, #150939 0%, #3D2A75 100%);
+    --gradient-purple-dark: linear-gradient(90deg, #150939 0%, #3D2A75 100%);
   }
   
   
@@ -144,7 +145,7 @@
 
 /* bottom nav */
 
-.home--bottom-nav {
+.bottom-nav {
   background-color: var(--purple);
   position: fixed;
   bottom: -1px;
