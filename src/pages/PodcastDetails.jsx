@@ -57,10 +57,12 @@ export default function PodcastDetails() {
     }
 
     function handlePlayPause() {
+
         const prevState = isPlaying;
         setIsPlaying(!prevState)
 
         if (prevState) {
+            
             audioRef.current.pause()
         } else {
             audioRef.current.play()
@@ -160,11 +162,11 @@ export default function PodcastDetails() {
                                         <LinearProgress 
                                             variant="determinate" 
                                             color="secondary" 
-                                            value={duration} 
+                                            value={calculateTime(episode.setDuration)} 
                                             style={{ width: "40%" }}
-                                            duration={calculateTime (duration)} 
+                                            duration={calculateTime (setDuration)} 
                                             
-                                        />{duration}
+                                        />{calculateTime(episode.setDuration)}
                                        
                                        
                                        <audio ref={audioRef} src={episode.file} preload="none"></audio>
