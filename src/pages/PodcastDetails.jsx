@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import BottomNav from '../components/BottomNav';
 import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -17,6 +17,12 @@ export default function PodcastDetails() {
     const [isLoading, setIsLoading] = useState(true)
     // const [seasonsButtons, setSeasonsButtons] = useState([]);
 
+    const [isPlaying, setIsPlaying] = useState(false);
+    // const [playProgreess, setPlayProgress] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0)
+    const [duration, setDuration] = useState(0)
+    const audioRef = useRef(null)
+
     // function handlePlayPause(episode) {
     //     if (episode.play) {
     //         episode.pause();
@@ -32,10 +38,52 @@ export default function PodcastDetails() {
             .then((res) => res.json())
             .then((data) => {setSelectedPodcast(data)})
             .catch((error) => console.log(error))
+            .audioRef.current.addEventListener('loadedmetadata', () => {
+                setDuration(audioRef.current.duration)
+            })
             .finally (setIsLoading(false))
     }, [id])
 
-    function handlePlay()
+
+    
+
+    // function handlePlay() {
+    //     // play audio file <audio src={episode.file} controls></audio> */}
+    //     const prevState = isPlaying(true);
+    //     if (prevState) {
+    //         audioRef.current.pause()
+    //     }
+    //     setIsPlaying(true)
+    //     console.log('playing')
+    // }
+
+    // function handlePause() {
+    //     const prevState = isPlaying(false);
+    //     if (prevState) {
+    //         audioRef.current.play()
+    //     }
+    //     setIsPlaying(false)
+    //     console.log('paused')
+    // }
+
+    audioRef.current.addEventListener('timeupdate', () => {
+        setCurrentTime(audioRef.current.currentTime)
+    })
+    function handlePlayPause() {
+        const prevState = isPlaying;
+        setIsPlaying(!prevState)
+
+        if (prevState) {
+            audioRef.current.pause()
+        } else {
+            audioRef.current.play()
+        }
+        console.log('played/paused')
+    }
+
+
+    
+
 
     return (
         <div>
@@ -58,7 +106,7 @@ export default function PodcastDetails() {
                             <h2 className="details--header-title">{selectedPodcast.title.replace(/&amp;/g, " &")}</h2>
                         
 
-                        <img src={selectedPodcast.image} className="details--header-pod-image"/>
+                        <img src={selectedPodcast.image} className="details--header-pod-image" alt="podcast-image"/>
                         <p className="details--header-description">{selectedPodcast.description}</p>
                         <p className="details--header-seasons-genres">Now on Season {selectedPodcast.seasons.length}  | {selectedPodcast.genres.join(", ").replace(/All,/g, "")}</p>
                     </div>
@@ -111,13 +159,34 @@ export default function PodcastDetails() {
                                         <span className="details--cards-episode-description">{episode.description}</span>
                                         
                                         <div className="details--podcast-play">
-                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | 43:00</span>
+                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | {duration}</span>
                                         {/* audio file length */}
-                                        {/* <audio src={episode.file}  controls></audio> */}
-                                        <PlayCircleOutlineTwoToneIcon className="details--audio-btn"/>
-                                        <PauseIcon className="details--audio-btn"/>
-                                        <LinearProgress variant="success" value={episode.progress} />
-                                        <audio src={episode.file} controls></audio>
+                                        {/* <audio src={episode.file}  controls preload="none"></audio> */}
+                                        <PlayCircleOutlineTwoToneIcon 
+                                            className="details--audio-btn"
+                                            onClick={() => handlePlayPause()}
+                                            style={{ display: isPlaying ? "none" : "block" }}
+                                        />
+                                        <PauseIcon 
+                                            className="details--audio-btn"
+                                            onClick={() => handlePlayPause()}
+                                            style={{ display: isPlaying ? "block" : "none" }}
+                                        />
+
+                                        {/* manage play progress/duration */}
+                                        <LinearProgress 
+                                            variant="success" 
+                                            color="secondary" 
+                                            value={episode.progress} 
+                                            style={{ width: "50%" }}
+                                            duration={duration} 
+                                            text={duration}
+                                        />
+                                       
+                                       {/*
+                                       <audio src={episode.file} controls></audio> */}
+                                       {/* duration */}
+                                       <audio ref={audioRef} src={episode.file} preload="none"></audio>
                                         </div>
                                     </div>
                                     
@@ -130,8 +199,6 @@ export default function PodcastDetails() {
                 </div>
 
             )}
-
-            {/*  */}
 
 
             <BottomNav/>
