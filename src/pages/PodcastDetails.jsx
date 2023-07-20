@@ -19,17 +19,8 @@ export default function PodcastDetails() {
 
     const [isPlaying, setIsPlaying] = useState(false);
     // const [playProgreess, setPlayProgress] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0)
     const [duration, setDuration] = useState(0)
     const audioRef = useRef(null)
-
-    // function handlePlayPause(episode) {
-    //     if (episode.play) {
-    //         episode.pause();
-    //     } else {
-    //         episode.play();
-    //     }
-    // }
 
     // fetch full info about the podcast using the id
     useEffect(() => {
@@ -38,37 +29,25 @@ export default function PodcastDetails() {
             .then((res) => res.json())
             .then((data) => {setSelectedPodcast(data)})
             .catch((error) => console.log(error))
-            .audioRef.current.addEventListener('loadedmetadata', () => {
-                setDuration(audioRef.current.duration)
-            })
             .finally (setIsLoading(false))
     }, [id])
 
+    // get duration
+    useEffect(() => {
+        const seconds = Math.floor(audioRef.current.duration);
 
+        setDuration(seconds);
+    }, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState])
     
+    function calculateTime(secs) {
+        const minutes = Math.floor(secs / 60);
+        const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+        const seconds = Math.floor(secs % 60);
+        const returnSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+        return `${returnMinutes}:${returnSeconds}`;
+        
+    }
 
-    // function handlePlay() {
-    //     // play audio file <audio src={episode.file} controls></audio> */}
-    //     const prevState = isPlaying(true);
-    //     if (prevState) {
-    //         audioRef.current.pause()
-    //     }
-    //     setIsPlaying(true)
-    //     console.log('playing')
-    // }
-
-    // function handlePause() {
-    //     const prevState = isPlaying(false);
-    //     if (prevState) {
-    //         audioRef.current.play()
-    //     }
-    //     setIsPlaying(false)
-    //     console.log('paused')
-    // }
-
-    audioRef.current.addEventListener('timeupdate', () => {
-        setCurrentTime(audioRef.current.currentTime)
-    })
     function handlePlayPause() {
         const prevState = isPlaying;
         setIsPlaying(!prevState)
@@ -80,10 +59,6 @@ export default function PodcastDetails() {
         }
         console.log('played/paused')
     }
-
-
-    
-
 
     return (
         <div>
@@ -175,17 +150,15 @@ export default function PodcastDetails() {
 
                                         {/* manage play progress/duration */}
                                         <LinearProgress 
-                                            variant="success" 
+                                            variant="determinate" 
                                             color="secondary" 
-                                            value={episode.progress} 
-                                            style={{ width: "50%" }}
-                                            duration={duration} 
-                                            text={duration}
+                                            value={(audioRef.current.currentTime / duration) * 100} 
+                                            style={{ width: "40%" }}
+                                            duration={calculateTime (duration)} 
+                                            
                                         />
+                                        {/* {duration} */}
                                        
-                                       {/*
-                                       <audio src={episode.file} controls></audio> */}
-                                       {/* duration */}
                                        <audio ref={audioRef} src={episode.file} preload="none"></audio>
                                         </div>
                                     </div>
