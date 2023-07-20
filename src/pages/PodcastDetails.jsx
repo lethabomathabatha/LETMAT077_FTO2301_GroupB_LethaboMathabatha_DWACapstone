@@ -22,6 +22,14 @@ export default function PodcastDetails() {
     const [duration, setDuration] = useState(0)
     const audioRef = useRef(null)
 
+    // function handlePlayPause(episode) {
+    //     if (episode.play) {
+    //         episode.pause();
+    //     } else {
+    //         episode.play();
+    //     }
+    // }
+
     // fetch full info about the podcast using the id
     useEffect(() => {
         setIsLoading(true)
@@ -33,11 +41,11 @@ export default function PodcastDetails() {
     }, [id])
 
     // get duration
-    useEffect(() => {
-        const seconds = Math.floor(audioRef.current.duration);
+    // useEffect(() => {
+    //     const seconds = Math.floor(audioRef.current.duration);
 
-        setDuration(seconds);
-    }, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState])
+    //     setDuration(seconds);
+    // }, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState])
     
     function calculateTime(secs) {
         const minutes = Math.floor(secs / 60);
@@ -152,12 +160,12 @@ export default function PodcastDetails() {
                                         <LinearProgress 
                                             variant="determinate" 
                                             color="secondary" 
-                                            value={(audioRef.current.currentTime / duration) * 100} 
+                                            value={duration} 
                                             style={{ width: "40%" }}
                                             duration={calculateTime (duration)} 
                                             
-                                        />
-                                        {/* {duration} */}
+                                        />{duration}
+                                       
                                        
                                        <audio ref={audioRef} src={episode.file} preload="none"></audio>
                                         </div>
