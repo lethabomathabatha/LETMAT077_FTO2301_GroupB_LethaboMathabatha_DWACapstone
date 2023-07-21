@@ -7,7 +7,8 @@ import '/src/pages/PodcastDetailsStyles.css'
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CircularProgress } from "@mui/material";
-import { LinearProgress } from "@mui/material";
+// import { LinearProgress } from "@mui/material";
+import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 
 
 export default function PodcastDetails() {
@@ -15,21 +16,11 @@ export default function PodcastDetails() {
 
     const [selectedPodcast, setSelectedPodcast] = useState({});
     const [isLoading, setIsLoading] = useState(true)
-    // const [seasonsButtons, setSeasonsButtons] = useState([]);
-
     const [isPlaying, setIsPlaying] = useState(false);
-    // const [playProgreess, setPlayProgress] = useState(0);
     const [duration, setDuration] = useState(0)
-    const audioRef = useRef(null)
+    const audioRef = useRef()
 
-    // function handlePlayPause(episode) {
-    //     if (episode.play) {
-    //         episode.pause();
-    //     } else {
-    //         episode.play();
-    //     }
-    // }
-
+   
     // fetch full info about the podcast using the id
     useEffect(() => {
         setIsLoading(true)
@@ -40,29 +31,30 @@ export default function PodcastDetails() {
             .finally (setIsLoading(false))
     }, [id])
 
-    // get duration
-    // useEffect(() => {
-    //     const seconds = Math.floor(audioRef.current.duration);
-
-    //     setDuration(seconds);
-    // }, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState])
+    // get duration of each podcast show audio file
+    useEffect(() => {
+        if (audioRef.current) {
+            setDuration(audioRef.current.duration)
+        }
+    }, [isPlaying])
     
     function calculateTime(secs) {
+        const hours = Math.floor(secs / 3600);
         const minutes = Math.floor(secs / 60);
-        const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
         const seconds = Math.floor(secs % 60);
+
+        const returnHours = hours < 10 ? `0${hours}` : `${hours}`;
+        const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
         const returnSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${returnMinutes}:${returnSeconds}`;
+        return `${returnHours}:${returnMinutes}:${returnSeconds}`;
         
     }
 
     function handlePlayPause() {
-
         const prevState = isPlaying;
         setIsPlaying(!prevState)
 
         if (prevState) {
-            
             audioRef.current.pause()
         } else {
             audioRef.current.play()
@@ -144,7 +136,7 @@ export default function PodcastDetails() {
                                         <span className="details--cards-episode-description">{episode.description}</span>
                                         
                                         <div className="details--podcast-play">
-                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | {duration}</span>
+                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | {calculateTime(duration)}</span>
                                         {/* audio file length */}
                                         {/* <audio src={episode.file}  controls preload="none"></audio> */}
                                         {/* ACTION: only play/pause for the selected episode */}
@@ -152,23 +144,33 @@ export default function PodcastDetails() {
                                         <PlayCircleOutlineTwoToneIcon 
                                             className="details--audio-btn"
                                             onClick={() => handlePlayPause()}
-                                            style={{ display: isPlaying ? "none" : "block" }}
+                                            style={{ display: isPlaying ? "none" : "block", cursor: "pointer" }}
+                                        />
+                                        <GraphicEqIcon 
+                                            className="details--audio-equalizer"
+                                            style={{ 
+                                                display: isPlaying ? "block" : "none", 
+                                                opacity: "0.3" 
+                                                
+                                            }}
                                         />
                                         <PauseIcon 
                                             className="details--audio-btn"
                                             onClick={() => handlePlayPause()}
-                                            style={{ display: isPlaying ? "block" : "none" }}
+                                            style={{ display: isPlaying ? "block" : "none", cursor: "pointer" }}
+                                        
                                         />
+                                        
 
                                         {/* manage play progress/duration */}
-                                        <LinearProgress 
+                                        {/* <LinearProgress 
                                             variant="determinate" 
                                             color="secondary" 
                                             value={calculateTime(episode.setDuration)} 
                                             style={{ width: "40%" }}
                                             duration={calculateTime (setDuration)} 
                                             
-                                        />{calculateTime(episode.setDuration)}
+                                        />{calculateTime(episode.setDuration)} */}
                                        
                                        
                                        <audio ref={audioRef} src={episode.file} preload="none"></audio>
