@@ -61,6 +61,7 @@
 .search--results-image {
     width: 60px;
     border-radius: 0.5rem;
+    background-color: var(--light-purple);
   }
 
 .search--results-text {
