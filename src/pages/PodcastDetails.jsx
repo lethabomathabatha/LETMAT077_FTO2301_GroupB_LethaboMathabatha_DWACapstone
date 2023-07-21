@@ -1,27 +1,26 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react';
 import BottomNav from '../components/BottomNav';
-import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
-import PauseIcon from '@mui/icons-material/Pause';
+// import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
+// import PauseIcon from '@mui/icons-material/Pause';
 import '/src/pages/PodcastDetailsStyles.css'
 // import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CircularProgress } from "@mui/material";
 // import { LinearProgress } from "@mui/material";
-import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-
+// import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+import AudioPlayer from '../components/AudioPlayer';
 
 export default function PodcastDetails() {
     const { id } = useParams();
 
     const [selectedPodcast, setSelectedPodcast] = useState({});
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [duration, setDuration] = useState(0)
-    const [isAudioLoaded, setIsAudioLoaded] = useState(true)
-    const audioRef = useRef()
+    const [duration, setDuration] = useState(0);
+    // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
+    const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
 
-   
     // fetch full info about the podcast using the id
     useEffect(() => {
         setIsLoading(true)
@@ -29,16 +28,16 @@ export default function PodcastDetails() {
             .then((res) => res.json())
             .then((data) => {setSelectedPodcast(data)})
             .catch((error) => console.log(error))
-            .finally (setIsLoading(false))
+            .finally (() => setIsLoading(false));
     }, [id])
 
     // get duration of each podcast show audio file
     useEffect(() => {
         if (audioRef.current) {
-            setDuration(audioRef.current.duration)
+            setDuration(audioRef.current.duration);
         }
     }, [isPlaying])
-    
+
     function calculateTime(secs) {
         const hours = Math.floor(secs / 3600);
         const minutes = Math.floor(secs / 60);
@@ -48,20 +47,31 @@ export default function PodcastDetails() {
         const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
         const returnSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
         return `${returnHours}:${returnMinutes}:${returnSeconds}`;
-        
     }
 
-    function handlePlayPause() {
-        const prevState = isPlaying;
-        setIsPlaying(!prevState)
+    // function handlePlayPause(episodeId) {
+    //     if (currentPlayingEpisodeId === episodeId) {
+    //         if (isPlaying) {
+    //             audioRef.current.pause();
+    //         } else {
+    //             audioRef.current.play();
+    //         }
+    //         setIsPlaying((prevState) => !prevState);
+    //     } else {
+    //         if (currentPlayingEpisodeId !== null) {
+    //             // Pause the previously playing episode
+    //             const prevAudio = document.getElementById(`audio-${currentPlayingEpisodeId}`);
+    //             if (prevAudio) {
+    //                 prevAudio.pause();
+    //             }
+    //         }
+    //         setCurrentPlayingEpisodeId(episodeId);
+    //         setIsPlaying(true);
+    //         audioRef.current.play();
+    //     }
+    // }
 
-        if (prevState) {
-            audioRef.current.pause()
-        } else {
-            audioRef.current.play()
-        }
-        console.log('played/paused')
-    }
+    const audioRef = useRef();
 
     return (
         <div>
@@ -112,69 +122,26 @@ export default function PodcastDetails() {
                                         <span className="details--cards-episode">Ep{episode.episode}: {episode.title}</span>
                                         <span className="details--cards-episode-description">{episode.description}</span>
                                         
-                                        <div className="details--podcast-play">
-                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " & ")} {" "}  
-                                        | {calculateTime(duration)}</span>
-                                        {/* audio file length */}
-                                        {/* <audio src={episode.file}  controls preload="none"></audio> */}
-                                        {/* ACTION: only play/pause for the selected episode */}
 
-
-                                        {!isAudioLoaded && (
-                                            <CircularProgress
-                                                color="secondary"
-                                                style={{ display: isPlaying ? "none" : "block",  }}
-                                                size={"1.5rem"}
-                                            />
-                                            )}
-                                        <PlayCircleOutlineTwoToneIcon 
-                                            className="details--audio-btn"
-                                            onClick={() => handlePlayPause()}
-                                            style={{ 
-                                                display: isPlaying || !isAudioLoaded ? "none" : "block", 
-                                                cursor: "pointer" }}
-                                        />
-                                        <GraphicEqIcon 
-                                            className="details--audio-equalizer"
-                                            style={{ 
-                                                display: isPlaying ? "block" : "none", 
-                                                opacity: "0.3" 
+                                                    <div className="details--podcast-play">
+                                                        <span className="details--podcast-title">
+                                                            {selectedPodcast.title.replace(/&amp;/g, " & ")} {" "}  
+                                                            | {calculateTime(duration)}
+                                                        </span>
+                                                        <AudioPlayer audioSrc={episode.file} isPlaying={isPlaying} ref={episode.episode === currentPlayingEpisodeId ? audioRef : null} />
+                                                    </div>
+                                                </div>
                                                 
-                                            }}
-                                        />
-                                        <PauseIcon 
-                                            className="details--audio-btn"
-                                            onClick={() => handlePlayPause()}
-                                            style={{ 
-                                                display: isPlaying && isAudioLoaded ? "block" : "none", 
-                                                cursor: "pointer" }}
-                                        
-                                        />
-                                      
-                                       
-                                       <audio 
-                                        ref={audioRef} 
-                                        src={episode.file} 
-                                        preload="none"
-                                        onLoadedMetadata={() => setIsAudioLoaded(true)}
-                                       ></audio>
-                                        </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                    
-                                    
                                 </div>
                             ))}
-                            </div>
                         </div>
-                    ))}
-                </div>
-
-            )}
-
-
-            <BottomNav/>
-            </>
+                    )}
+                    <BottomNav />
+                </>
             )}
         </div>
-    )
+    );
 }
