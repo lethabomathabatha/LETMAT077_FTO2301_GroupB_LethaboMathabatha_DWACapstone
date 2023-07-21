@@ -98,7 +98,7 @@ export default function Search() {
                                                     year: "numeric",
                                                 })}  | Genres: {result.item.genres.join(", ")} | S{result.item.seasons}
                                                 </span>
-                                                <p className="search--results-description">{result.item.description} </p>
+                                                <span className="search--results-description">{result.item.description} </span>
                                             </div>
                                         </div>
                                     ))}
