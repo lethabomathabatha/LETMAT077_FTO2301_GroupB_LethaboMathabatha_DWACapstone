@@ -4,7 +4,7 @@ import BottomNav from '../components/BottomNav';
 import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
 import PauseIcon from '@mui/icons-material/Pause';
 import '/src/pages/PodcastDetailsStyles.css'
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { CircularProgress } from "@mui/material";
 // import { LinearProgress } from "@mui/material";
@@ -18,6 +18,7 @@ export default function PodcastDetails() {
     const [isLoading, setIsLoading] = useState(true)
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0)
+    const [isAudioLoaded, setIsAudioLoaded] = useState(true)
     const audioRef = useRef()
 
    
@@ -85,34 +86,10 @@ export default function PodcastDetails() {
 
                         <img src={selectedPodcast.image} className="details--header-pod-image" alt="podcast-image"/>
                         <p className="details--header-description">{selectedPodcast.description}</p>
-                        <p className="details--header-seasons-genres">Now on Season {selectedPodcast.seasons.length}  | {selectedPodcast.genres.join(", ").replace(/All,/g, "")}</p>
+                        <p className="details--header-seasons-genres">Now on Season {selectedPodcast.seasons.length}  | {selectedPodcast.genres.join(", ")}</p>
                     </div>
 
-                    <div className="details--seasons-btns">
-                        <p>Select a season</p>
-
-                        
-                        <div className="details--seasons-btn-group">  
-                            <div>
-                                <Button 
-                                    key={selectedPodcast.season}
-                                    variant="contained"
-                                    color="secondary"
-                                    style={{
-                                        color: "var(--light-purple)",
-                                        fontWeight: "800",
-                                        borderRadius: "15px",
-                                        backgroundColor: "var(--ice-white)",
-                                        fontSize: "11px",
-                                        height: "35px",
-                                        whiteSpace: "nowrap",
-                                    }}
-                                >{/*all the seasons should each appear on their own button*/}
-                                    Season {selectedPodcast.season}
-                                </Button>
-                                </div>
-                            </div>
-                    </div>
+                    {/* seasons selection */}
                     
                     {selectedPodcast.seasons.map((season) => (
                         <div key={season.season} className="details--section">
@@ -136,15 +113,26 @@ export default function PodcastDetails() {
                                         <span className="details--cards-episode-description">{episode.description}</span>
                                         
                                         <div className="details--podcast-play">
-                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " &")}  | {calculateTime(duration)}</span>
+                                        <span className="details--podcast-title">{selectedPodcast.title.replace(/&amp;/g, " & ")} {" "}  
+                                        | {calculateTime(duration)}</span>
                                         {/* audio file length */}
                                         {/* <audio src={episode.file}  controls preload="none"></audio> */}
                                         {/* ACTION: only play/pause for the selected episode */}
 
+
+                                        {!isAudioLoaded && (
+                                            <CircularProgress
+                                                color="secondary"
+                                                style={{ display: isPlaying ? "none" : "block",  }}
+                                                size={"1.5rem"}
+                                            />
+                                            )}
                                         <PlayCircleOutlineTwoToneIcon 
                                             className="details--audio-btn"
                                             onClick={() => handlePlayPause()}
-                                            style={{ display: isPlaying ? "none" : "block", cursor: "pointer" }}
+                                            style={{ 
+                                                display: isPlaying || !isAudioLoaded ? "none" : "block", 
+                                                cursor: "pointer" }}
                                         />
                                         <GraphicEqIcon 
                                             className="details--audio-equalizer"
@@ -157,23 +145,19 @@ export default function PodcastDetails() {
                                         <PauseIcon 
                                             className="details--audio-btn"
                                             onClick={() => handlePlayPause()}
-                                            style={{ display: isPlaying ? "block" : "none", cursor: "pointer" }}
+                                            style={{ 
+                                                display: isPlaying && isAudioLoaded ? "block" : "none", 
+                                                cursor: "pointer" }}
                                         
                                         />
-                                        
-
-                                        {/* manage play progress/duration */}
-                                        {/* <LinearProgress 
-                                            variant="determinate" 
-                                            color="secondary" 
-                                            value={calculateTime(episode.setDuration)} 
-                                            style={{ width: "40%" }}
-                                            duration={calculateTime (setDuration)} 
-                                            
-                                        />{calculateTime(episode.setDuration)} */}
+                                      
                                        
-                                       
-                                       <audio ref={audioRef} src={episode.file} preload="none"></audio>
+                                       <audio 
+                                        ref={audioRef} 
+                                        src={episode.file} 
+                                        preload="none"
+                                        onLoadedMetadata={() => setIsAudioLoaded(true)}
+                                       ></audio>
                                         </div>
                                     </div>
                                     
