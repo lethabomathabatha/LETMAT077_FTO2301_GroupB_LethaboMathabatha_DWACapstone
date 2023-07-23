@@ -49,28 +49,7 @@ export default function PodcastDetails() {
         return `${returnHours}:${returnMinutes}:${returnSeconds}`;
     }
 
-    // function handlePlayPause(episodeId) {
-    //     if (currentPlayingEpisodeId === episodeId) {
-    //         if (isPlaying) {
-    //             audioRef.current.pause();
-    //         } else {
-    //             audioRef.current.play();
-    //         }
-    //         setIsPlaying((prevState) => !prevState);
-    //     } else {
-    //         if (currentPlayingEpisodeId !== null) {
-    //             // Pause the previously playing episode
-    //             const prevAudio = document.getElementById(`audio-${currentPlayingEpisodeId}`);
-    //             if (prevAudio) {
-    //                 prevAudio.pause();
-    //             }
-    //         }
-    //         setCurrentPlayingEpisodeId(episodeId);
-    //         setIsPlaying(true);
-    //         audioRef.current.play();
-    //     }
-    // }
-
+   
     const audioRef = useRef();
 
     return (
