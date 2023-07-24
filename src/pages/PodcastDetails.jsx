@@ -21,7 +21,7 @@ export default function PodcastDetails() {
     const [duration, setDuration] = useState(0);
     // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
     const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
-    const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+
 
     // fetch full info about the podcast using the id
     useEffect(() => {
@@ -40,6 +40,7 @@ export default function PodcastDetails() {
         }
     }, [isPlaying])
 
+    /*
     function calculateTime(secs) {
         const hours = Math.floor(secs / 3600);
         const minutes = Math.floor(secs / 60);
@@ -49,11 +50,11 @@ export default function PodcastDetails() {
         const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
         const returnSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
         return `${returnHours}:${returnMinutes}:${returnSeconds}`;
-    }
+    } */
 
-    function handlePlayPause(playing) {
-        setIsPlaying(playing);
-    }
+    // function handlePlayPause(playing) {
+    //     setIsPlaying(playing);
+    // }
     const audioRef = useRef();
 
     return (
@@ -111,7 +112,17 @@ export default function PodcastDetails() {
                                                             {selectedPodcast.title.replace(/&amp;/g, " & ")} {" "}  
                                                             {/* | {calculateTime(duration)} */}
                                                         </span>
-                                                        <AudioPlayer audioSrc={episode.file} isPlaying={isPlaying} ref={episode.episode === currentPlayingEpisodeId ? audioRef : null} />
+                                                        <AudioPlayer 
+                                                            audioSrc={episode.file} 
+                                                            isPlaying={isPlaying} 
+                                                            ref={episode.episode === currentPlayingEpisodeId ? audioRef : null} 
+                                                            selectedPodcast={selectedPodcast}
+                                                            setCurrentPlayingEpisodeId={setCurrentPlayingEpisodeId} 
+                                                            episodeName= {episode.title} // current playing episode name
+                                                            currentPodcastImg= {selectedPodcast.image} // current playing episode podcast image
+
+                                                            
+                                                        />
                                                     </div>
                                                 </div>
                                                 
@@ -124,12 +135,7 @@ export default function PodcastDetails() {
                     )}
                     
                     {/* maybe add an onClick that handles the display. When a user clicks play, bring up the audio controls, and when a user clicks pause, pause the audio but keep the controls open */}
-                    {showAudioPlayer && (
-                        <div style={{ position: "fixed", bottom: 10, left: 0, right: 0, zIndex: 999, backgroundColor: "yellow" }}>
-                            <audio controls><source src={currentPlayingEpisodeId?.file}  type="audio/mpeg"/></audio>
-                        </div>
-                    )}
-
+                   
                   
 
                     {/* <BottomNav /> */}
