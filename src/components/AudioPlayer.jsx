@@ -53,6 +53,7 @@ export default function AudioPlayer({
     // close audio player when close button is clicked
     const confirmClose = window.confirm("Are you sure you want to close the audio player?")
     if (confirmClose) {
+      audioRef.current.pause();
       setShowAudioPlayer(false)
     }
   }
@@ -70,10 +71,7 @@ export default function AudioPlayer({
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      // Clean up the event listener when the component unmounts
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      return "Are you sure you want to close the audio player?";
-
     };
   }, [showAudioPlayer]);
 
@@ -89,6 +87,7 @@ export default function AudioPlayer({
         />
 
         {/* Conditionally render the play/pause buttons */}
+        {/* stop playing audio when the audio player closes (showAudioPlayer=(false)) */}
         {isLoading ? (
           <CircularProgress color="secondary" size={"1.5rem"} />
         ) : isPlaying ? (

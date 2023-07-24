@@ -55,6 +55,27 @@ export default function PodcastDetails() {
     // function handlePlayPause(playing) {
     //     setIsPlaying(playing);
     // }
+
+    const handlePlayPause = (episode) => {
+        if (isPlaying) {
+          audioRef.current.pause();
+          setShowAudioPlayer(true);
+        } else {
+          audioRef.current.play();
+          setShowAudioPlayer(true);
+        }
+        setIsPlaying((prevState) => !prevState);
+      
+        // Set the current show details
+        setCurrentPlayingEpisodeId(episode.episode); // ID of the current episode
+        setSelectedPodcast({
+          title: episode.title, // Title of the current episode
+          image: selectedPodcast.image // Image of the podcast (assuming it's the same for all episodes)
+        });
+      };
+      
+
+
     const audioRef = useRef();
 
     return (
@@ -119,8 +140,8 @@ export default function PodcastDetails() {
                                                             selectedPodcast={selectedPodcast}
                                                             setCurrentPlayingEpisodeId={setCurrentPlayingEpisodeId} 
                                                             episodeName= {episode.title} // current playing episode name
-                                                            currentPodcastImg= {selectedPodcast.image} // current playing episode podcast image
-
+                                                            currentPodcastImg= {season.image} // current playing episode podcast image
+                                                            onPlayPause={handlePlayPause}
                                                             
                                                         />
                                                     </div>
