@@ -11,6 +11,7 @@ import { CircularProgress } from "@mui/material";
 // import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AudioPlayer from '../components/AudioPlayer';
 
+
 export default function PodcastDetails() {
     const { id } = useParams();
 
@@ -20,6 +21,7 @@ export default function PodcastDetails() {
     const [duration, setDuration] = useState(0);
     // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
     const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
+    const [showAudioPlayer, setShowAudioPlayer] = useState(false);
 
     // fetch full info about the podcast using the id
     useEffect(() => {
@@ -49,7 +51,9 @@ export default function PodcastDetails() {
         return `${returnHours}:${returnMinutes}:${returnSeconds}`;
     }
 
-   
+    function handlePlayPause(playing) {
+        setIsPlaying(playing);
+    }
     const audioRef = useRef();
 
     return (
@@ -105,7 +109,7 @@ export default function PodcastDetails() {
                                                     <div className="details--podcast-play">
                                                         <span className="details--podcast-title">
                                                             {selectedPodcast.title.replace(/&amp;/g, " & ")} {" "}  
-                                                            | {calculateTime(duration)}
+                                                            {/* | {calculateTime(duration)} */}
                                                         </span>
                                                         <AudioPlayer audioSrc={episode.file} isPlaying={isPlaying} ref={episode.episode === currentPlayingEpisodeId ? audioRef : null} />
                                                     </div>
@@ -118,7 +122,17 @@ export default function PodcastDetails() {
                             ))}
                         </div>
                     )}
-                    <BottomNav />
+                    
+                    {/* maybe add an onClick that handles the display. When a user clicks play, bring up the audio controls, and when a user clicks pause, pause the audio but keep the controls open */}
+                    {showAudioPlayer && (
+                        <div style={{ position: "fixed", bottom: 10, left: 0, right: 0, zIndex: 999, backgroundColor: "yellow" }}>
+                            <audio controls><source src={currentPlayingEpisodeId?.file}  type="audio/mpeg"/></audio>
+                        </div>
+                    )}
+
+                  
+
+                    {/* <BottomNav /> */}
                 </>
             )}
         </div>
