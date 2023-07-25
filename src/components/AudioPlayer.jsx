@@ -16,13 +16,14 @@ export default function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const handlePlayPause = () => {
     if (isPlaying) {
-      audioRef.current.pause();
+      // audioRef.current.pause();
       setShowAudioPlayer(false);
     } else {
-      audioRef.current.play();
+      // audioRef.current.play();
       setShowAudioPlayer(true);
     }
     setIsPlaying((prevState) => !prevState);
@@ -34,6 +35,11 @@ export default function AudioPlayer({
 
   useEffect(() => {
     audioRef.current.addEventListener("ended", () => setIsPlaying(false));
+
+    audioRef.current.addEventListener("timeupdate", () => {
+      
+    })
+    
     return () => {
       audioRef.current.removeEventListener("ended", () => setIsPlaying(false))
     }
@@ -55,6 +61,7 @@ export default function AudioPlayer({
     if (confirmClose) {
       audioRef.current.pause();
       setShowAudioPlayer(false)
+      setIsPlaying(false)
     }
   }
 
@@ -66,6 +73,7 @@ export default function AudioPlayer({
         e.returnValue = "Are you sure you want to close the audio player?";
         return "Are you sure you want to close the audio player?";
       }
+
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -108,7 +116,7 @@ export default function AudioPlayer({
           <span>{currentPlayingEpisodeName}</span>
           <h4>ID: {setCurrentPlayingEpisodeId}</h4>
           <img src={currentPodcastImg} alt="podcast-image" width={45} />
-          <audio controls><source src={audioSrc} type="audio/mpeg" /></audio>
+          <audio controls  autoPlay preload="auto"><source src={audioSrc} type="audio/mpeg" /></audio>
           <button onClick={closePlayer}>Close</button>
           {/* Add show title, show image, podcast name to audio player */}
         </div>
