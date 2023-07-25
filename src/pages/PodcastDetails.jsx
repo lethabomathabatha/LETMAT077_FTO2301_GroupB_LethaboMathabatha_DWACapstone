@@ -8,11 +8,13 @@ import AudioPlayer from '../components/AudioPlayer';
 import { Link } from "react-router-dom"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from "@mui/icons-material/Favorite" 
+import { HistoryRouterProps } from 'react-router-dom';
 
 
 
 export default function PodcastDetails() {
     const { id } = useParams();
+    const history = HistoryRouterProps()
 
     const [selectedPodcast, setSelectedPodcast] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -81,9 +83,18 @@ export default function PodcastDetails() {
             ...prevFaves,
             [episodeId] : !prevFaves[episodeId],
         }))
-        console.log("made fave!")
+        // if setEpisodeFaves is set to FavoriteIcon, send the episode's details to the Favourites page
+        console.log("made/removed fave!")
       }
     
+      // array to store fave episodes
+      const faveEpisodesArray = selectedEpisodes.filter(
+        (episode) => episodeFaves[episode.id]
+      )
+      history.push('/favourites', {
+        faveEpisodes : faveEpisodesArray
+      })
+
     const audioRef = useRef();
 
     return (
@@ -151,10 +162,12 @@ export default function PodcastDetails() {
                                                     {episodeFaves[episode.episode] ? (
                                                         <FavoriteIcon
                                                         onClick={() => handleFavourite(episode.episode)}
+                                                         /* send favourite to favourites page */
                                                         />
                                                     ) : (
                                                         <FavoriteBorderIcon
                                                         onClick={() => handleFavourite(episode.episode)}
+                                                        // remove favourite from favourites page
                                                         />
                                                     )}
                                                         
