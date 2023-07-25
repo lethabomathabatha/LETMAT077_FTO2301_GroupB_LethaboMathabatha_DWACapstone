@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField"
 import { CircularProgress } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import Fuse from "fuse.js"
+import { Link } from "react-router-dom"
 
 export default function Search() {
     const [shows, setShows] = useState([]);
@@ -51,10 +52,9 @@ export default function Search() {
         setIsLoading(false);
     };
 
-    const getPodcastDetails = (result) => {
-        window.location.href = `/search/${result.item.id}`;
-        console.log('podcast details');
-    };
+    // const handlePodcastDetailsClick = (result) => {
+    //     console.log('podcast details');
+    // };
 
     return (
         <div className="search--page">
@@ -85,29 +85,23 @@ export default function Search() {
             ) : (
                 <>
                     {searchTerm.length > 0 && (
-                        
-                                <div className="search--results">
-                                    {searchResults.map((result) => (
-                                        <div key={result.item.id} className="search--results-cards" onClick={() => getPodcastDetails(result)} >
-                                            <img src={result.item.image} alt="podcast-image" className="search--results-image" />
-                                            <div className="search--results-text">
-                                                <span className="search--results-title">{result.item.title.replace(/&amp;/g, " & ")}</span>
-                                                <span className="search--results-date-genres">Updated {new Date(result.item.updated).toLocaleDateString("en-GB", {
-                                                    day: "2-digit",
-                                                    month: "short",
-                                                    year: "numeric",
-                                                })}  | Genres: {result.item.genres.join(", ")} | S{result.item.seasons}
-                                                </span>
-                                                <span className="search--results-description">{result.item.description} </span>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            
-
-                              
-                      
-                        
+                        <div className="search--results">
+                            {searchResults.map((result) => (
+                                <Link key={result.item.id} to={`/search/${result.item.id}`} className="search--results-cards">
+                                    <img src={result.item.image} alt="podcast-image" className="search--results-image" />
+                                    <div className="search--results-text">
+                                        <span className="search--results-title">{result.item.title.replace(/&amp;/g, " & ")}</span>
+                                        <span className="search--results-date-genres">Updated {new Date(result.item.updated).toLocaleDateString("en-GB", {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        })}  | Genres: {result.item.genres && result.item.genres.join(", ")} | S{result.item.seasons}
+                                        </span>
+                                        <span className="search--results-description">{result.item.description} </span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     )}
                 </>
             )}
