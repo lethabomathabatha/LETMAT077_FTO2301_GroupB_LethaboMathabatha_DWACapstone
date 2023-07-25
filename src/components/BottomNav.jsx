@@ -29,6 +29,11 @@ const [iconColor, setIconColor] = useState("");
         setIconColor("#3D2A75");
     }
 
+    function sendToFavourites() {
+      window.location.href = "/favourites";
+      setIconColor("#3D2A75");
+  }
+
     return (
         <div className="bottom-nav">
           <HomeOutlinedIcon 
@@ -46,6 +51,7 @@ const [iconColor, setIconColor] = useState("");
 
           <FavoriteBorderOutlinedIcon
             className="favorite--icon"
+            onclick={sendToFavourites}
             style={{cursor: "pointer", color: iconColor}}
           />
 
