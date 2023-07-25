@@ -50,8 +50,8 @@ const [iconColor, setIconColor] = useState("");
           />
 
           <FavoriteBorderOutlinedIcon
-            className="favorite--icon"
-            onclick={sendToFavourites}
+            className="favourite--icon"
+            onClick={sendToFavourites}
             style={{cursor: "pointer", color: iconColor}}
           />
 
