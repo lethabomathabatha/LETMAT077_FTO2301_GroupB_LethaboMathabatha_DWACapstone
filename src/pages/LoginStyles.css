@@ -4,16 +4,12 @@
     --light-purple: #3D2A75;
 }
 
-* {
-    background-color: var(--light-purple);
-}
+
 
 .login--form {
     border: 1px solid #EEDDEF;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    color: #EEDDEF;
+    background-color: var(--light-purple)
 }
 
 /* #outlined-basic {

@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
 import PauseIcon from '@mui/icons-material/Pause';
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, duration } from "@mui/material";
 import GraphicEqIcon from '@mui/icons-material/GraphicEq'
+// import { LinearProgress } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
+
 
 export default function AudioPlayer({ 
   audioSrc, 
@@ -16,7 +19,8 @@ export default function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  // const [currentTime, setCurrentTime] = useState(0);
+  // const [totalDuration, setTotalDuration] = useState(0);
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -33,15 +37,18 @@ export default function AudioPlayer({
     setIsLoading(false);   
   }
 
+
+ 
   useEffect(() => {
     audioRef.current.addEventListener("ended", () => setIsPlaying(false));
 
-    audioRef.current.addEventListener("timeupdate", () => {
-      
-    })
+    
+    // audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetaData)
+
     
     return () => {
       audioRef.current.removeEventListener("ended", () => setIsPlaying(false))
+      // audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetaData)
     }
   }, []);
 
@@ -110,17 +117,39 @@ export default function AudioPlayer({
 
       {/* Display additional information when audio player is shown */}
       {showAudioPlayer && (
-        <div className="audio--bottom-player" style={{ position: "fixed", bottom: 50, left: 0, right: 0, backgroundColor: "hotpink", display: "flex", justifyContent: "center", padding: 10, flexDirection: "column" }}>
-          <span>Title: {selectedPodcast.title}</span>
-          <span>Episode: {episodeName}</span>
-          <span>{currentPlayingEpisodeName}</span>
-          <h4>ID: {setCurrentPlayingEpisodeId}</h4>
-          <img src={currentPodcastImg} alt="podcast-image" width={45} />
-          <audio controls  autoPlay preload="auto"><source src={audioSrc} type="audio/mpeg" /></audio>
-          <button onClick={closePlayer}>Close</button>
-          {/* Add show title, show image, podcast name to audio player */}
+        <div className="audio--bottom-player" 
+          style={{ 
+            position: "fixed", 
+            bottom: 50, 
+            left: 0, 
+            right: 0, 
+            display: "flex", 
+            padding: 10, 
+            flexDirection: "column",
+            zIndex:"9999",
+            }}>
+          
+
+          <div className="audio--bottom-header">
+            <img src={currentPodcastImg} alt="podcast-image" className="audio--bottom-image"/>
+            <div className="audio--bottom-text">
+              <span className="audio--bottom-title">{selectedPodcast.title}</span>
+              <span className="audio--bottom-episode">{episodeName}</span>
+            </div>
+            <CloseIcon onClick={closePlayer} />
+          </div>
+
+
+          <audio 
+            controls 
+            autoPlay 
+            preload="auto" 
+            style={{height:"2rem", width:"100%"}}
+            ><source src={audioSrc} type="audio/mpeg" />
+          </audio>
         </div>
       )}
+
     </div>
   );
 }

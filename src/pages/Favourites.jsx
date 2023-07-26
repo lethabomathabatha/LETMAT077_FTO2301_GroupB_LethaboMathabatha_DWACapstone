@@ -71,6 +71,8 @@ export default function Favourites() {
         <br />
       <h1>Favourite Episodes</h1>
       <div>
+
+        {/* if there are no favourites, display "You have no favourites :(" */}
         <Button
             onClick={() => {
                 sortByShowAToZ();
