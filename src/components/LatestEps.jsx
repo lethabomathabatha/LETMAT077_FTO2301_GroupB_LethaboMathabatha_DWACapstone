@@ -74,11 +74,7 @@ export default function LatestEps() {
            console.log(visibleCount);
        }
   
-       function getPodcastDetails() {
-        // get podcast details from "search/:id"
-        console.log('clicked!')
-
-       }
+    
     return (
         <div className="latest--section">
              
@@ -149,11 +145,7 @@ export default function LatestEps() {
       
               return (
                 <Link to={`/search/${episode.id}`} key={episode.id} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
-                <div className="latest--card-details" 
-                    onClick={getPodcastDetails}
-
-                >
-                    
+                <div className="latest--card-details">
                     <img 
                         src={episode.image}
                         className="latest--card-image"
