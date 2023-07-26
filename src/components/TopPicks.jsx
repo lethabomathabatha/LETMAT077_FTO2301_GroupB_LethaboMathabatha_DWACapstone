@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import '/src/pages/HomeStyles.css'
 import { CircularProgress } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function TopPicks() {
     const [display, setDisplay] = useState([]);
@@ -37,16 +38,16 @@ export default function TopPicks() {
             <div className="home--display-top">
             {display.map((data) => {
             return (
-                <div key={data.id} className="home--card">
+                <Link to={`/search/${data.id}`} key={data.id} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
+                <div className="home--card">
                     <img
                         src={data.image}
                         className="home--card-image"
                         alt="podcast-image"
                     />
                     <h2 className="home--card-label">{data.title}</h2>
-                    {/* <h2 className="home--card-genres"> <strong>Genres</strong> {data.genres}</h2> */}
-                    
                 </div>
+                </Link>
             );
             })}
             </div>
