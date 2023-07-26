@@ -8,13 +8,14 @@ import AudioPlayer from '../components/AudioPlayer';
 import { Link } from "react-router-dom"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from "@mui/icons-material/Favorite" 
-import { HistoryRouterProps } from 'react-router-dom';
+import Favourites from './Favourites';
 
 
 
 export default function PodcastDetails() {
     const { id } = useParams();
-    const history = HistoryRouterProps()
+    const audioRef = useRef();
+
 
     const [selectedPodcast, setSelectedPodcast] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +23,6 @@ export default function PodcastDetails() {
     const [duration, setDuration] = useState(0);
     // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
     const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
-    // const [isFavourite, setIsFavourite] = useState(false)
     const [episodeFaves, setEpisodeFaves] = useState({})
 
     // fetch full info about the podcast using the id
@@ -42,21 +42,6 @@ export default function PodcastDetails() {
         }
     }, [isPlaying])
 
-    /*
-    function calculateTime(secs) {
-        const hours = Math.floor(secs / 3600);
-        const minutes = Math.floor(secs / 60);
-        const seconds = Math.floor(secs % 60);
-
-        const returnHours = hours < 10 ? `0${hours}` : `${hours}`;
-        const returnMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        const returnSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${returnHours}:${returnMinutes}:${returnSeconds}`;
-    } */
-
-    // function handlePlayPause(playing) {
-    //     setIsPlaying(playing);
-    // }
 
     const handlePlayPause = (episode) => {
         if (isPlaying) {
@@ -79,23 +64,27 @@ export default function PodcastDetails() {
 
       // switch between the favourite icons. Only show one at a time, interchangeably when clicked on
       const handleFavourite = (episodeId) => {
-        setEpisodeFaves((prevFaves) => ({
-            ...prevFaves,
-            [episodeId] : !prevFaves[episodeId],
-        }))
-        // if setEpisodeFaves is set to FavoriteIcon, send the episode's details to the Favourites page
-        console.log("made/removed fave!")
-      }
+        // Check if the episode is already in episodeFaves
+        const isFavourite = episodeFaves[episodeId];
     
-      // array to store fave episodes
-      const faveEpisodesArray = selectedEpisodes.filter(
-        (episode) => episodeFaves[episode.id]
-      )
-      history.push('/favourites', {
-        faveEpisodes : faveEpisodesArray
-      })
+        // If the episode is already in favourites, remove it
+        if (isFavourite) {
+          setEpisodeFaves((prevFaves) => {
+            const updatedFaves = { ...prevFaves };
+            delete updatedFaves[episodeId];
+            return updatedFaves;
+          });
+        } else {
+          // If the episode is not in favourites, add it
+        //   send episode id to favourites
+          setEpisodeFaves((prevFaves) => ({
+            ...prevFaves,
+            [episodeId]: true,
+          }));
+        }
+      };
 
-    const audioRef = useRef();
+     
 
     return (
         <div>
@@ -162,16 +151,14 @@ export default function PodcastDetails() {
                                                     {episodeFaves[episode.episode] ? (
                                                         <FavoriteIcon
                                                         onClick={() => handleFavourite(episode.episode)}
-                                                         /* send favourite to favourites page */
+                                                        //  store episode in Favourites list
                                                         />
                                                     ) : (
                                                         <FavoriteBorderIcon
                                                         onClick={() => handleFavourite(episode.episode)}
-                                                        // remove favourite from favourites page
+                                                        // remove favourite from favourites list
                                                         />
                                                     )}
-                                                        
-
 
                                                         <AudioPlayer 
                                                             audioSrc={episode.file} 
@@ -179,8 +166,8 @@ export default function PodcastDetails() {
                                                             ref={episode.episode === currentPlayingEpisodeId ? audioRef : null} 
                                                             selectedPodcast={selectedPodcast}
                                                             setCurrentPlayingEpisodeId={setCurrentPlayingEpisodeId} 
-                                                            episodeName= {episode.title} // current playing episode name
-                                                            currentPodcastImg= {season.image} // current playing episode podcast image
+                                                            episodeName= {episode.title}
+                                                            currentPodcastImg= {season.image} 
                                                             onPlayPause={handlePlayPause}
                                                         />
                                                     </div>

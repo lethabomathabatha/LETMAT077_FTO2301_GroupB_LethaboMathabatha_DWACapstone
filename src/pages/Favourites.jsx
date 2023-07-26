@@ -1,6 +1,6 @@
 // import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import './PodcastDetailsStyles.css';
+import './SearchStyles.css';
 import BottomNav from '../components/BottomNav';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
