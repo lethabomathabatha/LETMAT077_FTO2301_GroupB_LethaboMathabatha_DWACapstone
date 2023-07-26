@@ -82,7 +82,7 @@ export default function Genres() {
 
                   {/* display results */}
                 {selectedGenre === genre && (
-                  <div className="genre--results-cards" style={{ display: "flex", flexDirection: "column" }}>
+                  <div className="genre--results-cards">
                     {shows
                       .filter((show) => show.genres.includes(genre))
                       .map((show) => (
@@ -95,15 +95,20 @@ export default function Genres() {
                             cursor: "pointer",
                           }}
                         >
-                          <div key={show.id} style={{ color: "var(--lila-white)" }}
-                          >
-                            <img src={show.image} alt={show.title} className="latest--card-image" />
-                            <span>{show.title}</span>
+                          <div key={show.id} style={{ color: "var(--lila-white)" }} className="genre--results-details">
+                            <img src={show.image} alt={show.title} className="genre--results-image" />
+                            <span className="genre--results-title">{show.title}</span>
                           </div>
                         </Link>
                       ))}
                       {/* close results when clicked */}
-                    <button onClick={() => setSelectedGenre(null)}>close</button>
+                    <Button 
+                      onClick={() => setSelectedGenre(null)}
+                      variant="contained"
+                      color="secondary"
+                      style={{ fontSize: "12px",  width: "15px", borderRadius: "15px", borderWidth: "2px" }}
+                      
+                    >close</Button>
                   </div>
                 )}
               </div>
