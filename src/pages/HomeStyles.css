@@ -94,6 +94,7 @@
     width: 120px;
     border-radius: 2rem;
     padding: 0px 0px 0px 0px;
+    background-color: var(--lilac);
   }
 
   .home--card-label {
@@ -158,17 +159,13 @@
   border: 2px solid var(--light-purple);
   border-radius: 12px;
   padding: 10px;
-  justify-content: center;
-  align-self: center;
+  align-items: center;
 }
 
-/* on hover, add shadow */
-
-
-
-
 .genre--results-image {
-  width: 2.3rem
+  width: 2.3rem;
+  background-color: var(--lilac);
+  border-radius: 9px;
 }
 
 .genre--results-title {

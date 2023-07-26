@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import '/src/pages/HomeStyles.css'
 import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
-import '/src/components/GenresStyles.css'
 
 export default function Genres() {
   const [genreButtons, setGenreButtons] = useState([]);
