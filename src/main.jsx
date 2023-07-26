@@ -13,7 +13,8 @@ import {
 
 
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
   {
     path: "/",
     element: <App />,
@@ -34,8 +35,11 @@ const router = createBrowserRouter([
     path: "favourites",
     element: <Favourites />,
   },
-
-]);
+],
+  {
+    basename: "/pods"
+  }
+);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
