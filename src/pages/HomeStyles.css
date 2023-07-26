@@ -143,6 +143,38 @@
   gap: 0.5rem;
 }
 
+/* genres results */
+.genre--results-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+}
+
+.genre--results-details {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  border: 2px solid var(--light-purple);
+  border-radius: 12px;
+  padding: 10px;
+  justify-content: center;
+  align-self: center;
+}
+
+/* on hover, add shadow */
+
+
+
+
+.genre--results-image {
+  width: 2.3rem
+}
+
+.genre--results-title {
+  font-size: 14px;
+  
+}
 /* bottom nav */
 
 .bottom-nav {
