@@ -51,6 +51,7 @@
 .latest--card-image {
     width: 60px;
     border-radius: 0.5rem;
+    background-color: var(--lilac);
   }
 
 .latest--card-details {
