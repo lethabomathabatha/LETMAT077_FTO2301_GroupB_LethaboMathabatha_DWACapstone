@@ -1,66 +1,60 @@
-import { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search"
-import '/src/pages/HomeStyles.css'
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import '/src/pages/HomeStyles.css';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 
-
-
 export default function BottomNav() {
-const [iconColor, setIconColor] = useState("");
+  const location = useLocation();
+  const [iconColor, setIconColor] = useState('#EEDDEF');
 
-    function sendToHome() {
-        window.location.href = "/";
-        setIconColor("#3D2A75");
-
-        // change icon color
-        // document.getElementsByClassName("home--icon")[0].style.color = "#3D2A75";
-
-    }
-
-    function sendToSearch() {
-        window.location.href = "/search";
-        setIconColor("#3D2A75");
-    }
-
-    function sendToLogin() {
-        window.location.href = "/login";
-        setIconColor("#3D2A75");
-    }
-
-    function sendToFavourites() {
-      window.location.href = "/favourites";
-      setIconColor("#3D2A75");
+  function handleIconClick() {
+    setIconColor('#3D2A75');
   }
 
-    return (
-        <div className="bottom-nav">
-          <HomeOutlinedIcon 
-            className="home--icon"
-            onClick={sendToHome}
-            style={{cursor: "pointer", color: iconColor}}
-    
-          />
+  return (
+    <div className="bottom-nav">
+      <Link to="/" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
+        <HomeOutlinedIcon
+          className="home--icon"
+          style={{
+            cursor: 'pointer',
+            color: location.pathname === '/' ? '#3D2A75' : iconColor,
+          }}
+        />
+      </Link>
 
-          <SearchIcon 
-            className="search--icon"
-            onClick={sendToSearch}
-            style={{cursor: "pointer", color: iconColor}}
-          />
+      <Link to="/search" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
+        <SearchIcon
+          className="search--icon"
+          style={{
+            cursor: 'pointer',
+            color: location.pathname === '/search' ? '#3D2A75' : iconColor,
+          }}
+        />
+      </Link>
 
-          <FavoriteBorderOutlinedIcon
-            className="favourite--icon"
-            onClick={sendToFavourites}
-            style={{cursor: "pointer", color: iconColor}}
-          />
+      <Link to="/favourites" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
+        <FavoriteBorderOutlinedIcon
+          className="favourite--icon"
+          style={{
+            cursor: 'pointer',
+            color: location.pathname === '/favourites' ? '#3D2A75' : iconColor,
+          }}
+        />
+      </Link>
 
-          <PermIdentityOutlinedIcon 
-            className="profile--icon"
-            // onClick, take the user to /login
-            onClick={sendToLogin}
-            style={{cursor: "pointer", color: iconColor}}
-          />
-        </div>
-    )
+      <Link to="/login" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
+        <PermIdentityOutlinedIcon
+          className="profile--icon"
+          style={{
+            cursor: 'pointer',
+            color: location.pathname === '/login' ? '#3D2A75' : iconColor,
+          }}
+        />
+      </Link>
+    </div>
+  );
 }
