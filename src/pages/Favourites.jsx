@@ -1,32 +1,137 @@
 // import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import '../pages/LoginStyles.css';
+import './PodcastDetailsStyles.css';
 import BottomNav from '../components/BottomNav';
-import { useLocation } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
+import TopNav from '../components/TopNav';
+
+
 
 export default function Favourites() {
-    const location = useLocation();
-    const [faveEpisodes, setFaveEpisodes] = useState([])
+    const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
     useEffect(() => {
-
-        if (location.state && location.state.favoriteEpisodes) {
-          setFaveEpisodes(location.state.favoriteEpisodes);
+        const favouritesFromLocalStorage = JSON.parse(
+            localStorage.getItem("favouriteEpisodes")
+        );
+        if (favouritesFromLocalStorage) {
+            setFavouriteEpisodes(favouritesFromLocalStorage)
         }
-      }, [location]);
-    
-      return (
-        <div>
-          <h3>Favourites</h3>
-          {faveEpisodes.map((episode) => (
-            <div key={episode.id}>
-              <p>{episode.title}</p>
-              <img src={episode.image} width={30}  />
-              
-            </div>
-          ))}
+    }, [])
+  
+    // Update localStorage when favouriteEpisodes state changes
+    useEffect(() => {
+        localStorage.setItem("favouriteEpisodes", JSON.stringify(favouriteEpisodes));
+    }, [favouriteEpisodes]);
 
-          <BottomNav />
+  // Function to remove an episode from favourites
+  const removeFavouriteEpisode = (episodeId) => {
+    setFavouriteEpisodes((prevFavourites) =>
+      prevFavourites.filter((favId) => favId !== episodeId)
+    );
+  };
+
+  // Sort favourites by show titles from A-Z
+  const sortByShowAToZ = () => {
+    setFavouriteEpisodes((prevFavourites) =>
+      [...prevFavourites].sort((a, b) =>
+        a.showTitle.localeCompare(b.showTitle, undefined, { sensitivity: "base" })
+      )
+    );
+  };
+
+  // Sort favourites by show titles from Z-A
+  const sortByShowZToA = () => {
+    setFavouriteEpisodes((prevFavourites) =>
+      [...prevFavourites].sort((a, b) =>
+        b.showTitle.localeCompare(a.showTitle, undefined, { sensitivity: "base" })
+      )
+    );
+  };
+
+  // Sort favourites by date updated in ascending order
+  const sortByDateAsc = () => {
+    setFavouriteEpisodes((prevFavourites) =>
+      [...prevFavourites].sort((a, b) => a.dateAdded - b.dateAdded)
+    );
+  };
+
+  // Sort favourites by date updated in descending order
+  const sortByDateDesc = () => {
+    setFavouriteEpisodes((prevFavourites) =>
+      [...prevFavourites].sort((a, b) => b.dateAdded - a.dateAdded)
+    );
+  };
+
+  return (
+    <div>
+        <TopNav />
+        <br />
+        <br />
+      <h1>Favourite Episodes</h1>
+      <div>
+        <Button
+            onClick={() => {
+                sortByShowAToZ();
+                // specifically sort by title from A to Z
+                }}
+                variant={ "outlined" }
+                color="secondary"
+                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                className="latest--selection">   
+                A-Z
+        </Button>
+
+        <Button
+            onClick={() => {
+                sortByShowZToA();
+                // specifically sort by title from Z to A
+                }}
+                variant={ "outlined" }
+                color="secondary"
+                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                className="latest--selection">   
+                Z-A
+        </Button>
+
+        <Button
+            onClick={() => {
+                sortByDateAsc();
+                // specifically sort by title from date asc
+                }}
+                variant={ "outlined" }
+                color="secondary"
+                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                className="latest--selection">   
+                Newest
+        </Button>
+
+        <Button
+            onClick={() => {
+                sortByDateDesc();
+                // specifically sort by title from date desc
+                }}
+                variant={ "outlined" }
+                color="secondary"
+                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                className="latest--selection">   
+                Oldest
+        </Button>
+        
+      </div>
+
+      {favouriteEpisodes.map((episode) => (
+        <div key={episode.id}>
+          <span>{episode.showTitle}</span>
+          <span>{episode.season}</span>
+          <span>{episode.title}</span>
+          <span>{episode.dateAdded}</span>
+          
+          <CloseIcon onClick={() => removeFavouriteEpisode(episode.id)} />
         </div>
-      );
-    }
+      ))}
+      <BottomNav />
+    </div>
+  );
+}
