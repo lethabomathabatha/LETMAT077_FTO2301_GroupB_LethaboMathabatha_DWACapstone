@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./LatestEpsStyles.css"
 import Button from '@mui/material/Button';
 import { CircularProgress } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function LatestEps() {
     const [episodes, setEpisodes] = useState([]);
@@ -73,6 +74,11 @@ export default function LatestEps() {
            console.log(visibleCount);
        }
   
+       function getPodcastDetails() {
+        // get podcast details from "search/:id"
+        console.log('clicked!')
+
+       }
     return (
         <div className="latest--section">
              
@@ -142,7 +148,11 @@ export default function LatestEps() {
               const modifiedTitle = episode.title.replace(/&amp;/g, " & ");
       
               return (
-                <div className="latest--card-details" key={episode.id}>
+                <Link to={`/search/${episode.id}`} key={episode.id} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
+                <div className="latest--card-details" 
+                    onClick={getPodcastDetails}
+
+                >
                     
                     <img 
                         src={episode.image}
@@ -164,6 +174,8 @@ export default function LatestEps() {
                             </span>
                         </div>
                 </div>
+
+                </Link>
               );
             })}
 
