@@ -3,11 +3,13 @@ import Button from '@mui/material/Button';
 import '/src/pages/HomeStyles.css'
 import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
+import '/src/components/GenresStyles.css'
 
 export default function Genres() {
   const [genreButtons, setGenreButtons] = useState([]);
   const [shows, setShows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedGenre, setSelectedGenre] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,7 +27,7 @@ export default function Genres() {
 
         Promise.all(genreFetchPromises)
           .then((showsData) => {
-            setShows(showsData); // Store the shows data in state
+            setShows(showsData);
             const allGenres = showsData.reduce((genres, show) => {
               show.genres.forEach((genre) => {
                 if (!genres.includes(genre)) {
@@ -43,13 +45,7 @@ export default function Genres() {
 
   const handleGenreClick = (genre) => {
     console.log(`Clicked on genre: ${genre}`);
-    const showsWithGenre = shows.filter((show) => show.genres.includes(genre));
-    console.log("Shows with this genre:", showsWithGenre);
-    // get the IDs of the shows with this genre so that we can view them on 'search/:id'
-    const showIds = showsWithGenre.map((show) => show.id);
-    console.log("Show IDs:", showIds);
-
-
+    setSelectedGenre(genre);
   };
 
   return (
@@ -64,11 +60,7 @@ export default function Genres() {
         ) : (
           <>
             {genreButtons.map((genre) => (
-              // <Link to={`/search/${episode.id.}`} key={episode.id} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
-             // <Link /> should take the id and take user to 'search/:id'
-            //  <Link to={`/search/${genre.showIds}`} key={genre} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
-
-             <div key={genre}>
+              <div key={genre}>
                 <Button
                   key={genre}
                   variant="contained"
@@ -88,21 +80,32 @@ export default function Genres() {
                   {genre}
                 </Button>
 
-                {/* when user clicks on a genre, there should be a list of shows that have that genre appear under the buttons */}
-                <div className="genre--results">
-                  {shows.filter((show) => show.genres.includes(genre)).map((show) => (
-                    <Link to={`/search/${show.id}`} key={show.id} style={{textDecoration:"none", color:"inherit", cursor:"pointer"}}>
-                      <div
-                        key={show.id}
-                        style={{
-                          color: "var(--lila-white)",
-                        }}
-                      >
-                        <span>{show.title}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                  {/* display results */}
+                {selectedGenre === genre && (
+                  <div className="genre--results-cards" style={{ display: "flex", flexDirection: "column" }}>
+                    {shows
+                      .filter((show) => show.genres.includes(genre))
+                      .map((show) => (
+                        <Link
+                          to={`/search/${show.id}`}
+                          key={show.id}
+                          style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <div key={show.id} style={{ color: "var(--lila-white)" }}
+                          >
+                            <img src={show.image} alt={show.title} className="latest--card-image" />
+                            <span>{show.title}</span>
+                          </div>
+                        </Link>
+                      ))}
+                      {/* close results when clicked */}
+                    <button onClick={() => setSelectedGenre(null)}>close</button>
+                  </div>
+                )}
               </div>
             ))}
           </>
