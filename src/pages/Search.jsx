@@ -87,7 +87,7 @@ export default function Search() {
                     {searchTerm.length > 0 && (
                         <div className="search--results">
                             {searchResults.map((result) => (
-                                <Link key={result.item.id} to={`/search/${result.item.id}`} className="search--results-cards" style={{textDecoration:"none"}}>
+                                <Link key={result.item.id} to={`/search/${result.item.id}`} className="search--results-cards" style={{textDecoration:"none", color:"inherit"}}>
                                     <img src={result.item.image} alt="podcast-image" className="search--results-image" />
                                     <div className="search--results-text">
                                         <span className="search--results-title">{result.item.title.replace(/&amp;/g, " & ")}</span>
