@@ -5,10 +5,9 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useNavigate } from 'react-router-dom';
 
-const supabase = createClient(
-  import.meta.env.VITE_REACT_APP_PODS_SUPABASE_URL, 
-  import.meta.env.VITE_REACT_APP_PODS_SUPABASE_ANON_KEY
-);
+const supabaseUrl = import.meta.env.VITE_REACT_APP_PODS_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_REACT_APP_PODS_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function Login() {
   // after the user logs in, send them to the home page
