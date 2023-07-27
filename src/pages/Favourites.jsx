@@ -11,6 +11,8 @@ import TopNav from '../components/TopNav';
 export default function Favourites() {
     const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
+    // accept id from episode selected as favourite
+
     useEffect(() => {
         const favouritesFromLocalStorage = JSON.parse(
             localStorage.getItem("favouriteEpisodes")
@@ -69,10 +71,15 @@ export default function Favourites() {
         <TopNav />
         <br />
         <br />
-      <h1>Favourite Episodes</h1>
-      <div>
+        
 
-        {/* if there are no favourites, display "You have no favourites :(" */}
+        <div className="favourites--section">
+      <h1>Favourite Episodes</h1>
+      {/* if there are no favourites, display "You have no favourites :(" in a <p> tag*/}
+      
+     
+        
+        <div>
         <Button
             onClick={() => {
                 sortByShowAToZ();
@@ -120,12 +127,13 @@ export default function Favourites() {
                 className="latest--selection">   
                 Oldest
         </Button>
-        
       </div>
 
-      {favouriteEpisodes.map((episode) => (
+      {/* display for favourite episodes */}
+
+    {favouriteEpisodes.map((episode) => (
         <div key={episode.id}>
-          <span>{episode.showTitle}</span>
+          <span>{episode.showName}</span>
           <span>{episode.season}</span>
           <span>{episode.title}</span>
           <span>{episode.dateAdded}</span>
@@ -134,6 +142,7 @@ export default function Favourites() {
         </div>
       ))}
       <BottomNav />
+    </div>
     </div>
   );
 }
