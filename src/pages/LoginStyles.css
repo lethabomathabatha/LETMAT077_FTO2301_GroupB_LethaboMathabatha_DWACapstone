@@ -2,14 +2,20 @@
     --purple: #150939;
     --lila-white: #EEDDEF;
     --light-purple: #3D2A75;
+    margin: 0 ;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    }
 
 
 .login--form {
-    border: 1px solid #EEDDEF;
-    color: #EEDDEF;
-    background-color: var(--light-purple)
+    border: 1px solid var(--light-purple);
+    border-radius: 12px;
+    padding: 10px;
+    color: var(--lila-white);
 }
 
 /* #outlined-basic {
