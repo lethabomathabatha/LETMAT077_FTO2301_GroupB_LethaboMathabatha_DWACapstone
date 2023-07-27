@@ -20,7 +20,6 @@ export default function Login() {
     }
   }, [navigate]);
 
-  
   return (
     <div className="login--form">
       <Auth 
