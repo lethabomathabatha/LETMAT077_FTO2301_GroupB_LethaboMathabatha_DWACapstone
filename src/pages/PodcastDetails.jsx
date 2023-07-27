@@ -128,7 +128,9 @@ export default function PodcastDetails() {
             {selectedPodcast && Object.keys(selectedPodcast).length > 0 && (
                 <div className="details--page" key={selectedPodcast.id}>
                     <div className="details--header">
-                        <img src="../public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
+                        {/* get the image from metadata */}
+                        
+                        <img src="./public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
 
                         <Link to="/search" style={{ textDecoration: 'none' }}>
                             <ArrowBackIosIcon
