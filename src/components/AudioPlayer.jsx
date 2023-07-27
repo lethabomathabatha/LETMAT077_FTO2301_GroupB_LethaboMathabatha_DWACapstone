@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import PlayCircleOutlineTwoToneIcon from '@mui/icons-material/PlayCircleOutlineTwoTone';
 import PauseIcon from '@mui/icons-material/Pause';
-import { CircularProgress, duration } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import GraphicEqIcon from '@mui/icons-material/GraphicEq'
 // import { LinearProgress } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,8 +19,7 @@ export default function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
-  // const [currentTime, setCurrentTime] = useState(0);
-  // const [totalDuration, setTotalDuration] = useState(0);
+
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -41,15 +40,13 @@ export default function AudioPlayer({
  
   useEffect(() => {
     audioRef.current.addEventListener("ended", () => setIsPlaying(false));
-
-    
+ 
     // audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetaData)
-
     
-    return () => {
-      audioRef.current.removeEventListener("ended", () => setIsPlaying(false))
-      // audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetaData)
-    }
+    // return () => {
+    //   audioRef.current.removeEventListener("ended", () => setIsPlaying(false))
+    //   // audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetaData)
+    // }
   }, []);
 
   useEffect(() => {
