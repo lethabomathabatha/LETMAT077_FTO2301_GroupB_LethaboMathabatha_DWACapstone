@@ -1,10 +1,9 @@
-// Login.jsx
-// import React from 'react';
+import { useEffect } from 'react';
 import '../pages/LoginStyles.css';
-import BottomNav from '../components/BottomNav';
 import { createClient } from '@supabase/supabase-js';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { useNavigate } from 'react-router-dom';
 
 const supabase = createClient(
   import.meta.env.VITE_REACT_APP_PODS_SUPABASE_URL, 
@@ -12,6 +11,17 @@ const supabase = createClient(
 );
 
 export default function Login() {
+  // after the user logs in, send them to the home page
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // send user to home page if user is logged in
+    if (supabase.auth.user()) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  
   return (
     <div className="login--form">
       <Auth 
@@ -20,7 +30,6 @@ export default function Login() {
         theme='light'
         providers={["google"]}
       />
-      <BottomNav />
     </div>
   );
 }

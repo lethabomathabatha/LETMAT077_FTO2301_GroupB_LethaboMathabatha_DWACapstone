@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { createClient } from '@supabase/supabase-js'
 import App from './App.jsx'
 import Login from './pages/Login.jsx'
-import Success from './pages/Success.jsx'
 import Search from './pages/Search.jsx'
 import PodcastDetails from './pages/PodcastDetails.jsx'
 import Favourites from './pages/Favourites.jsx'
@@ -29,10 +28,6 @@ const router = createBrowserRouter(
   {
     path: "login",
     element: <Login />,
-  },
-  {
-    path: "success",
-    element: <Success />,
   },
   {
     path: "search",
