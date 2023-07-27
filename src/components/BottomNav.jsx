@@ -46,12 +46,12 @@ export default function BottomNav() {
         />
       </Link>
 
-      <Link to="/login" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
+      <Link to="/account" onClick={handleIconClick} style={{ textDecoration: 'none' }}>
         <PermIdentityOutlinedIcon
           className="profile--icon"
           style={{
             cursor: 'pointer',
-            color: location.pathname === '/login' ? '#3D2A75' : iconColor,
+            color: location.pathname === '/account' ? '#3D2A75' : iconColor,
           }}
         />
       </Link>
