@@ -9,22 +9,23 @@ import { Link } from "react-router-dom"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from "@mui/icons-material/Favorite" 
 // import Favourites from './Favourites';
-
+import { supabase } from '../main';
 
 
 export default function PodcastDetails() {
+    // const user = useUser();
+    const [user, setUser] = useState(null);
     const { id } = useParams();
     const audioRef = useRef();
-
-
+    
     const [selectedPodcast, setSelectedPodcast] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    // const [duration, setDuration] = useState(0);
-    // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
     const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
     const [episodeFaves, setEpisodeFaves] = useState({})
     const [favourites, setFavourites] = useState([]);
+
+    
 
     // fetch full info about the podcast using the id
     useEffect(() => {
@@ -36,6 +37,25 @@ export default function PodcastDetails() {
             .finally (() => setIsLoading(false));
     }, [id])
 
+     // Fetch user data after the component mounts
+     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                setUser(user);
+
+                // local storage
+                const storedFavourites = localStorage.getItem("favouriteEpisodes");
+                if (storedFavourites) {
+                    setFavourites(JSON.parse(storedFavourites));
+                }
+            } catch (error) {
+                console.error('Error fetching user data from Supabase:', error);
+            }
+        };
+        fetchUserData();
+    }, []);
+
     const handlePlayPause = (episode) => {
         if (isPlaying) {
           audioRef.current.pause();
@@ -45,7 +65,7 @@ export default function PodcastDetails() {
         setIsPlaying((prevState) => !prevState);
       
         // Set the current show details
-        setCurrentPlayingEpisodeId(episode.episode); // ID of the current episode
+        setCurrentPlayingEpisodeId(episode.episode); 
         setSelectedPodcast({
           title: episode.title, 
         });
@@ -59,6 +79,8 @@ export default function PodcastDetails() {
 
       // switch between the favourite icons. Only show one at a time, interchangeably when clicked on
       // get the actual selected episode's show id and title
+    
+
       const handleFavourite = (episode, episodeTitle) => {
         setEpisodeFaves((prevFaves) => ({
           ...prevFaves,
@@ -85,18 +107,16 @@ export default function PodcastDetails() {
               showName: selectedPodcast.title,
               episodeTitle: episodeTitle,
               showId: selectedPodcast.id,
+              userId: user
             },
           ]);
         }
+        // local storage
+        localStorage.setItem("favouriteEpisodes", JSON.stringify(favourites));
         console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id);
       };
 
-    //   when refreshing the page, keep favourites in Supabase database
-    
 
-
-   
-   
       return (
         <div>
             {isLoading ? (
@@ -106,7 +126,7 @@ export default function PodcastDetails() {
             ) : (
             <>
             {selectedPodcast && Object.keys(selectedPodcast).length > 0 && (
-                <div className="details--page">
+                <div className="details--page" key={selectedPodcast.id}>
                     <div className="details--header">
                         <img src="../public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
 
