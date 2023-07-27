@@ -130,7 +130,7 @@ export default function PodcastDetails() {
                     <div className="details--header">
                         {/* get the image from metadata */}
                         
-                        <img src="./public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
+                        <img src="/public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
 
                         <Link to="/search" style={{ textDecoration: 'none' }}>
                             <ArrowBackIosIcon
