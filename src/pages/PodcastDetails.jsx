@@ -8,7 +8,7 @@ import AudioPlayer from '../components/AudioPlayer';
 import { Link } from "react-router-dom"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from "@mui/icons-material/Favorite" 
-import Favourites from './Favourites';
+// import Favourites from './Favourites';
 
 
 
@@ -20,10 +20,11 @@ export default function PodcastDetails() {
     const [selectedPodcast, setSelectedPodcast] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [duration, setDuration] = useState(0);
+    // const [duration, setDuration] = useState(0);
     // const [isAudioLoaded, setIsAudioLoaded] = useState(true);
     const [currentPlayingEpisodeId, setCurrentPlayingEpisodeId] = useState(null);
     const [episodeFaves, setEpisodeFaves] = useState({})
+    const [favourites, setFavourites] = useState([]);
 
     // fetch full info about the podcast using the id
     useEffect(() => {
@@ -35,54 +36,68 @@ export default function PodcastDetails() {
             .finally (() => setIsLoading(false));
     }, [id])
 
-    // get duration of each podcast show audio file
-    useEffect(() => {
-        if (audioRef.current) {
-            setDuration(audioRef.current.duration);
-        }
-    }, [isPlaying])
 
 
     const handlePlayPause = (episode) => {
         if (isPlaying) {
           audioRef.current.pause();
-          setShowAudioPlayer(true);
         } else {
           audioRef.current.play();
-          setShowAudioPlayer(true);
         }
         setIsPlaying((prevState) => !prevState);
       
         // Set the current show details
         setCurrentPlayingEpisodeId(episode.episode); // ID of the current episode
         setSelectedPodcast({
-          title: episode.title, // Title of the current episode
-          image: selectedPodcast.image // Image of the podcast (assuming it's the same for all episodes)
+          title: episode.title, 
         });
       };
 
 
       // switch between the favourite icons. Only show one at a time, interchangeably when clicked on
+      // get the actual selected episode's show id and title
+      const handleFavourite = (episode, episodeTitle) => {
+        setEpisodeFaves((prevFaves) => ({
+            ...prevFaves,
+            [episode.episode] : !prevFaves[episode.episode],
+
+        }))
+        setFavourites((prevFaves) => [
+            ...prevFaves,
+            {
+                showName: selectedPodcast.title,
+                episodeTitle: episodeTitle,
+                showId: selectedPodcast.id
+            },
+        ]);
+
+        console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id)
+      };
+
+
+      /*
       const handleFavourite = (episodeId) => {
-        // Check if the episode is already in episodeFaves
         const isFavourite = episodeFaves[episodeId];
-    
-        // If the episode is already in favourites, remove it
+        
         if (isFavourite) {
           setEpisodeFaves((prevFaves) => {
             const updatedFaves = { ...prevFaves };
             delete updatedFaves[episodeId];
             return updatedFaves;
+            
           });
+
+          setFavouriteEpisodeIds((prevIds) => prevIds.filter((id) => id !== episodeId));
+          console.log(favouriteEpisodeIds)
         } else {
-          // If the episode is not in favourites, add it
-        //   send episode id to favourites
           setEpisodeFaves((prevFaves) => ({
             ...prevFaves,
             [episodeId]: true,
           }));
+
+          setFavouriteEpisodeIds((prevIds) => [...prevIds, episodeId]);
         }
-      };
+      };*/
 
      
 
@@ -150,13 +165,15 @@ export default function PodcastDetails() {
 
                                                     {episodeFaves[episode.episode] ? (
                                                         <FavoriteIcon
-                                                        onClick={() => handleFavourite(episode.episode)}
+                                                        onClick={() => handleFavourite(episode, episode.title)}
+
                                                         //  store episode in Favourites list
+                                                        className="details--podcast-favourite"
                                                         />
                                                     ) : (
                                                         <FavoriteBorderIcon
-                                                        onClick={() => handleFavourite(episode.episode)}
-                                                        // remove favourite from favourites list
+                                                        onClick={() => handleFavourite(episode, episode.title)}
+                                                        className="details--podcast-favourite"
                                                         />
                                                     )}
 
@@ -170,6 +187,8 @@ export default function PodcastDetails() {
                                                             currentPodcastImg= {season.image} 
                                                             onPlayPause={handlePlayPause}
                                                         />
+
+                                                        
                                                     </div>
                                                 </div>
                                                 
