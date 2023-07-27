@@ -36,8 +36,6 @@ export default function PodcastDetails() {
             .finally (() => setIsLoading(false));
     }, [id])
 
-
-
     const handlePlayPause = (episode) => {
         if (isPlaying) {
           audioRef.current.pause();
@@ -53,55 +51,53 @@ export default function PodcastDetails() {
         });
       };
 
+      // add to array of favourites
+    useEffect(() => {
+        console.log("updated favourites array:", favourites)
+    }, [favourites])
+
 
       // switch between the favourite icons. Only show one at a time, interchangeably when clicked on
       // get the actual selected episode's show id and title
       const handleFavourite = (episode, episodeTitle) => {
         setEpisodeFaves((prevFaves) => ({
-            ...prevFaves,
-            [episode.episode] : !prevFaves[episode.episode],
-
-        }))
-        setFavourites((prevFaves) => [
+          ...prevFaves,
+          [episode.episode]: !prevFaves[episode.episode],
+        }));
+    
+        // Check if the episode is already in the favorites array
+        const isAlreadyFavorite = favourites.some(
+          (item) => item.showId === selectedPodcast.id && item.episodeTitle === episodeTitle
+        );
+    
+        // If the episode is already a favorite, remove it from the favorites array
+        if (isAlreadyFavorite) {
+          setFavourites((prevFaves) =>
+            prevFaves.filter(
+              (item) => !(item.showId === selectedPodcast.id && item.episodeTitle === episodeTitle)
+            )
+          );
+        } else {
+          // Otherwise, add the episode to the favorites array
+          setFavourites((prevFaves) => [
             ...prevFaves,
             {
-                showName: selectedPodcast.title,
-                episodeTitle: episodeTitle,
-                showId: selectedPodcast.id
+              showName: selectedPodcast.title,
+              episodeTitle: episodeTitle,
+              showId: selectedPodcast.id,
             },
-        ]);
-
-        console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id)
+          ]);
+        }
+        console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id);
       };
 
+    //   when refreshing the page, keep favourites in Supabase database
+    
 
-      /*
-      const handleFavourite = (episodeId) => {
-        const isFavourite = episodeFaves[episodeId];
-        
-        if (isFavourite) {
-          setEpisodeFaves((prevFaves) => {
-            const updatedFaves = { ...prevFaves };
-            delete updatedFaves[episodeId];
-            return updatedFaves;
-            
-          });
 
-          setFavouriteEpisodeIds((prevIds) => prevIds.filter((id) => id !== episodeId));
-          console.log(favouriteEpisodeIds)
-        } else {
-          setEpisodeFaves((prevFaves) => ({
-            ...prevFaves,
-            [episodeId]: true,
-          }));
-
-          setFavouriteEpisodeIds((prevIds) => [...prevIds, episodeId]);
-        }
-      };*/
-
-     
-
-    return (
+   
+   
+      return (
         <div>
             {isLoading ? (
                 <div className="loading">
@@ -114,14 +110,12 @@ export default function PodcastDetails() {
                     <div className="details--header">
                         <img src="../public/podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
 
-                            <Link to="/search">
-                                <ArrowBackIosIcon 
-                                    className="details--header-back-btn"
-                                    onClick={<Link to="/search"/>}
-                                    // onClick={() => window.location.href = "/search"}
-                                    style={{cursor: "pointer"}}
-                                />
-                            </Link>
+                        <Link to="/search" style={{ textDecoration: 'none' }}>
+                            <ArrowBackIosIcon
+                            className="details--header-back-btn"
+                            style={{ cursor: "pointer" }}
+                            />
+                        </Link>
 
 
                         <h2 className="details--header-title">{selectedPodcast.title.replace(/&amp;/g, " &")}</h2>
