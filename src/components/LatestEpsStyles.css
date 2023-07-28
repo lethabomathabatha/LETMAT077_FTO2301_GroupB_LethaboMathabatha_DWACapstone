@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .latest--episodes {
@@ -39,7 +40,7 @@
     grid-template-columns: auto 1fr;
     gap: 1rem;
     border-top: 1px solid var(--lila-white);
-    margin-bottom: 49px;
+    margin-bottom: 120px;
 }
 
 .latest--cards {

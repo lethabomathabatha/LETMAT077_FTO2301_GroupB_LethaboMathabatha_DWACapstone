@@ -5,18 +5,18 @@ export default function TopNav() {
     
     // greeting based on the time of day
   // let user = JSON.parse(localStorage.getItem("user"));
-  let user = "Lethabo"
+  // let user = "Lethabo"
   const time = new Date().getHours();
   // if it's before 12pm, it's morning, if it's after 12pm but before 6pm, it's afternoon, if it's after 6pm but before 3am, it's evening
   let greeting = "";
   if (time >= 3 && time < 12) {
-    greeting = `Good Morning, ${user} `;
+    greeting = `Good Morning`;
   } else if (time >= 12 && time < 18) {
-    greeting = `Good Afternoon, ${user} `;
+    greeting = `Good Afternoon`;
   } else if (time >= 18 && time < 24) {
-    greeting = `Good Evening, ${user} `;
+    greeting = `Good Evening`;
   } else {
-    greeting = `Good Night, ${user} `;
+    greeting = `Good Night`;
   }
 
   return (
