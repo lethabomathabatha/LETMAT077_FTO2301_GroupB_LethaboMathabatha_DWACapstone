@@ -8,10 +8,14 @@ import TopNav from '../components/TopNav';
 
 
 
-export default function Favourites() {
+export default function Favourites({ favourites }) {
     const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
- // get show episodes from favourites array in PodcastDetails
+
+ // get show episodes from favourites array in PodcastDetails here:
+
+
+
   
 
   // Function to remove an episode from favourites
@@ -55,77 +59,78 @@ export default function Favourites() {
 
   return (
     <div>
-        <TopNav />
-        <br />
-        <br />
         
-
         <div className="favourites--section">
-      <h1>Favourite Episodes</h1>
-      {/* if there are no favourites, display "You have no favourites :(" in a <p> tag*/}
+          <h1>Favourite Episodes</h1>
       
      
-        
-        <div>
-        <Button
-            onClick={() => {
-                sortByShowAToZ();
-                // specifically sort by title from A to Z
-                }}
-                variant={ "outlined" }
-                color="secondary"
-                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
-                className="latest--selection">   
-                A-Z
-        </Button>
+              
+            <div className="favourites--sorting-btns" 
+                style={{ 
+                  display: "flex", 
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}> 
+              <Button
+                  onClick={() => {
+                      sortByShowAToZ();
+                      // specifically sort by title from A to Z
+                      }}
+                      variant={ "outlined" }
+                      color="secondary"
+                      style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                      className="latest--selection">   
+                      A-Z
+              </Button>
 
-        <Button
-            onClick={() => {
-                sortByShowZToA();
-                // specifically sort by title from Z to A
-                }}
-                variant={ "outlined" }
-                color="secondary"
-                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
-                className="latest--selection">   
-                Z-A
-        </Button>
+              <Button
+                  onClick={() => {
+                      sortByShowZToA();
+                      // specifically sort by title from Z to A
+                      }}
+                      variant={ "outlined" }
+                      color="secondary"
+                      style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                      className="latest--selection">   
+                      Z-A
+              </Button>
 
-        <Button
-            onClick={() => {
-                sortByDateAsc();
-                // specifically sort by title from date asc
-                }}
-                variant={ "outlined" }
-                color="secondary"
-                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
-                className="latest--selection">   
-                Newest
-        </Button>
+              <Button
+                  onClick={() => {
+                      sortByDateAsc();
+                      // specifically sort by title from date asc
+                      }}
+                      variant={ "outlined" }
+                      color="secondary"
+                      style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                      className="latest--selection">   
+                      Newest
+              </Button>
 
-        <Button
-            onClick={() => {
-                sortByDateDesc();
-                // specifically sort by title from date desc
-                }}
-                variant={ "outlined" }
-                color="secondary"
-                style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
-                className="latest--selection">   
-                Oldest
-        </Button>
-      </div>
+              <Button
+                  onClick={() => {
+                      sortByDateDesc();
+                      // specifically sort by title from date desc
+                      }}
+                      variant={ "outlined" }
+                      color="secondary"
+                      style={{ color: "var(--lila-white)" , fontSize: "10px", width: "13px", borderRadius: "15px", borderWidth: "2px" }}
+                      className="latest--selection">   
+                      Oldest
+              </Button>
+            </div>
 
-      {/* display for favourite episodes */}
+            {/* display for favourite episodes */}
 
-    {favouriteEpisodes.map((episode) => (
-        <div key={episode.id}>
-          <span>{episode.showName}</span>
-          <span>{episode.season}</span>
-          <span>{episode.title}</span>
-          <span>{episode.dateAdded}</span>
-          
-          <CloseIcon onClick={() => removeFavouriteEpisode(episode.id)} />
+          {favouriteEpisodes.map((episode) => (
+              <div key={episode.id}>
+                <span>{episode.showName}</span>
+                <span>{episode.season}</span>
+                <span>{episode.title}</span>
+                <span>{episode.dateAdded}</span>
+                <span>{episodeTitle}</span>
+                
+                <CloseIcon onClick={() => removeFavouriteEpisode(episode.id)} />
         </div>
       ))}
       <BottomNav />
