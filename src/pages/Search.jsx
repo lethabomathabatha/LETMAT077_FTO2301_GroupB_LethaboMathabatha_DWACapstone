@@ -58,6 +58,7 @@ export default function Search() {
 
     return (
         <div className="search--page">
+            
             <header className="search--header">
                 <img src="../podcast-bg.png" alt="podcast-background" width={"100%"} className="search--header-image" />
                 <p className="search--header-title">Search For The Next <strong>Best Podcast</strong> You`ve Ever Heard</p>
