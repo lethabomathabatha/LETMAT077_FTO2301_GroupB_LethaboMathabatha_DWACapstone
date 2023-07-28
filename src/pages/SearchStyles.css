@@ -3,7 +3,7 @@
 }
 /* page body*/
 .search--page {
-    margin: 0;
+    margin: 7px;
     padding: 0;
 }
 
@@ -21,10 +21,10 @@
 
 .search--header-title {
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 0%;
     color: var(--lila-white);
-    font-size: 24px;
+    font-size: 26px;
     text-align: left;
     width: 90%;
     font-weight: 300;
@@ -38,6 +38,7 @@
     border-radius: 8px;
     width: 100%;
     box-shadow: var(--light-purple) 0px 0px 10px 1px; 
+    justify-content: center;
 }
 
 /* results */
