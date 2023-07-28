@@ -4,17 +4,12 @@ import './SearchStyles.css';
 import BottomNav from '../components/BottomNav';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import TopNav from '../components/TopNav';
 
 
 
 export default function Favourites({ favourites }) {
     const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
-    
-
-
-  
 
   // Function to remove an episode from favourites
   const removeFavouriteEpisode = (episodeId) => {
@@ -126,7 +121,6 @@ export default function Favourites({ favourites }) {
                 <span>{episode.season}</span>
                 <span>{episode.title}</span>
                 <span>{episode.dateAdded}</span>
-                <span>{episodeTitle}</span>
                 
                 <CloseIcon onClick={() => removeFavouriteEpisode(episode.id)} />
         </div>
