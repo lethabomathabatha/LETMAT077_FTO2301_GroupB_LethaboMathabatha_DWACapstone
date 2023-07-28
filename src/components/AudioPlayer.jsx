@@ -14,11 +14,15 @@ export default function AudioPlayer({
   currentPlayingEpisodeName, 
   currentPodcastImg,
   setCurrentPlayingEpisodeId,
+  currentPlayingPosition,
+  onPlayPause,
+  onTimeUpdate,
 }) {
   const audioRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAudioPlayer, setShowAudioPlayer] = useState(false);
+  const [currentPlayingPosition, setCurrentPlayingPosition] = useState(0);
 
 
   const handlePlayPause = () => {
@@ -86,6 +90,17 @@ export default function AudioPlayer({
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [showAudioPlayer]);
+
+  const handleTimeUpdate = () => {
+    setCurrentPlayingPosition(aud)
+  }
+
+  useEffect(() => {
+    if (currentPlayingPosition) {
+      const positionInSeconds = (currentPlayingPosition * audioRef.current.duration) / 100;
+      audioRef.current.currentTime = positionInSeconds;
+    }
+  }, [currentPlayingPosition]);
 
 
   return (

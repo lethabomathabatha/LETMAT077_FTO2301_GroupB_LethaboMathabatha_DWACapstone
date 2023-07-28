@@ -25,6 +25,8 @@ export default function PodcastDetails() {
     const [episodeFaves, setEpisodeFaves] = useState({})
     const [favourites, setFavourites] = useState([]);
 
+    const [currentPlayingPosition, setCurrentPlayingPosition] = useState(0);
+
     
 
     // fetch full info about the podcast using the id
@@ -114,6 +116,32 @@ export default function PodcastDetails() {
         console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id);
       };
 
+        // handle audio player progress   
+      const handleTimeUpdate = () => {
+        setCurrentPlayingPosition(audioRef.current.currentTime);
+      }
+
+      useEffect(() => {
+          const saveListeningHistory = () => {
+              const listeningHistory = {
+                  showId: selectedPodcast.id,
+                  episodeId: currentPlayingEpisodeId,
+                  position: currentPlayingPosition,
+                  userId: user,
+                  audioRef: audioRef.current
+              };
+              // supabase
+              supabase.from("listening_history").insert(listeningHistory)
+              .then(() => {
+                  console.log("saved listening history");
+              })
+
+              // local storage
+              localStorage.setItem("listeningHistory", JSON.stringify(listeningHistory));
+          }
+          saveListeningHistory();
+      }, [id, currentPlayingEpisodeId, currentPlayingPosition, user, selectedPodcast.id]);
+
       return (
         <div>
             {isLoading ? (
@@ -200,6 +228,8 @@ export default function PodcastDetails() {
                                                             episodeName= {episode.title}
                                                             currentPodcastImg= {season.image} 
                                                             onPlayPause={handlePlayPause}
+                                                            onTimeUpdate={currentPlayingPosition}
+                                                            currentPlayingPosition={currentPlayingPosition}
                                                         />
 
                                                         
