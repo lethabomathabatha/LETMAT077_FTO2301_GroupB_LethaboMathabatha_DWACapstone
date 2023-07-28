@@ -49,6 +49,7 @@ export default function Account() {
                 onClick={() => signOutUser()}
                 variant='outlined'
                 color='secondary'
+                style={{cursor: 'pointer'}}
                 >
                 Sign Out
             </Button>
@@ -59,6 +60,7 @@ export default function Account() {
                 onClick={() => navigate('/login')}
                 variant='outlined'
                 color='secondary'
+                style={{cursor: 'pointer'}}
                 >
                 Sign me in!
             </Button>
