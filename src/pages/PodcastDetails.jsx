@@ -132,7 +132,8 @@ export default function PodcastDetails() {
                         
                         <img src="../podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
 
-                        <Link to="/search" style={{ textDecoration: 'none' }}>
+
+                        <Link to="/search" style={{ textDecoration: 'none', color: 'inherit' }}>
                             <ArrowBackIosIcon
                             className="details--header-back-btn"
                             style={{ cursor: "pointer" }}

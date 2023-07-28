@@ -11,21 +11,8 @@ import TopNav from '../components/TopNav';
 export default function Favourites() {
     const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
-    // accept id from episode selected as favourite
-
-    useEffect(() => {
-        const favouritesFromLocalStorage = JSON.parse(
-            localStorage.getItem("favouriteEpisodes")
-        );
-        if (favouritesFromLocalStorage) {
-            setFavouriteEpisodes(favouritesFromLocalStorage)
-        }
-    }, [])
+ // get show episodes from favourites array in PodcastDetails
   
-    // Update localStorage when favouriteEpisodes state changes
-    useEffect(() => {
-        localStorage.setItem("favouriteEpisodes", JSON.stringify(favouriteEpisodes));
-    }, [favouriteEpisodes]);
 
   // Function to remove an episode from favourites
   const removeFavouriteEpisode = (episodeId) => {
