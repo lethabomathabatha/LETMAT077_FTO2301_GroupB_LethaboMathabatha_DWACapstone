@@ -1,16 +1,12 @@
 // import React from 'react';
 import { useEffect, useState } from 'react';
 import '../pages/LoginStyles.css';
-// import BottomNav from '../components/BottomNav';
-import { createClient } from '@supabase/supabase-js';
+import BottomNav from '../components/BottomNav';
 // import { Auth } from '@supabase/auth-ui-react';
 // import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useNavigate } from 'react-router-dom';
-
-const supabase = createClient(
-    import.meta.env.VITE_REACT_APP_PODS_SUPABASE_URL, 
-    import.meta.env.VITE_REACT_APP_PODS_SUPABASE_ANON_KEY
-  );
+import { supabase } from '../main';
+import { Button } from '@mui/material';
 
 export default function Account() {
 
@@ -47,15 +43,28 @@ export default function Account() {
       <div className="success--display">
         { Object.keys(user).length !== 0 ?
         <>
-            <h2>Success! Welcome to Pods.</h2>
-            <button onClick={() => signOutUser()}>Sign Out</button>
+            <h2>Welcome to Pods. :) </h2>
+            <h3>{user.email}</h3>
+            <Button 
+                onClick={() => signOutUser()}
+                variant='outlined'
+                color='secondary'
+                >
+                Sign Out
+            </Button>
         </> :
-        <>
-            <h2>User not logged in</h2>
-            <button onClick={() => navigate('/')}>Go back home</button>
-        </>
+        <div className='account--login' style={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
+            <h2>Hey, looks like you are not logged in :( </h2>
+            <Button 
+                onClick={() => navigate('/login')}
+                variant='outlined'
+                color='secondary'
+                >
+                Sign me in!
+            </Button>
+        </div>
         }
-        
+        <BottomNav />
       </div>
   );
 }
