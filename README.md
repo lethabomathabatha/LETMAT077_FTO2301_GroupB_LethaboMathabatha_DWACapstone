@@ -4,5 +4,6 @@
 - Pods is built on JavaScript and ReactJS, utilizes Supabase for user authentication and database storage, and is hosted on Netlify.
 
 ## Find Pods on [podsapp.netlify.app](https://podsapp.netlify.app/). 🔮
+Best viewed on mobile ;)
 
 
