@@ -1,6 +1,6 @@
 .details--page {
     margin: 0;
-    padding: 0;
+    padding: 7px;
     margin-bottom: 120px;
     border-bottom: 1px solid var(--lila-white);
 }

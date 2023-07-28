@@ -79,8 +79,6 @@ export default function PodcastDetails() {
 
       // switch between the favourite icons. Only show one at a time, interchangeably when clicked on
       // get the actual selected episode's show id and title
-    
-
       const handleFavourite = (episode, episodeTitle) => {
         setEpisodeFaves((prevFaves) => ({
           ...prevFaves,
@@ -116,7 +114,6 @@ export default function PodcastDetails() {
         console.log(episodeTitle, selectedPodcast.title, selectedPodcast.id);
       };
 
-
       return (
         <div>
             {isLoading ? (
@@ -128,9 +125,8 @@ export default function PodcastDetails() {
             {selectedPodcast && Object.keys(selectedPodcast).length > 0 && (
                 <div className="details--page" key={selectedPodcast.id}>
                     <div className="details--header">
-                        {/* get the image from metadata */}
                         
-                        <img src="../podcast-bg.png" alt="podcast-background" width={"100%"} className="details--header-image"/>
+                        <img src="../podcast-bg.png" alt="podcast-background" width={"100%"} style={{ backgroundColor: "var(--light-purple)"}} className="details--header-image"/>
 
 
                         <Link to="/search" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -182,7 +178,7 @@ export default function PodcastDetails() {
 
                                                     {episodeFaves[episode.episode] ? (
                                                         <FavoriteIcon
-                                                        onClick={() => handleFavourite(episode, episode.title)}
+                                                        onClick={() => handleFavourite(episode, episode.title )}
 
                                                         //  store episode in Favourites list
                                                         className="details--podcast-favourite"
@@ -193,6 +189,7 @@ export default function PodcastDetails() {
                                                         className="details--podcast-favourite"
                                                         />
                                                     )}
+                                                    
 
                                                         <AudioPlayer 
                                                             audioSrc={episode.file} 
