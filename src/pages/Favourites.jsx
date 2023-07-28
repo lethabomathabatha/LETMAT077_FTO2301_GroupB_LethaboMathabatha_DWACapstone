@@ -12,9 +12,6 @@ export default function Favourites({ favourites }) {
     const [favouriteEpisodes, setFavouriteEpisodes] = useState([])
 
 
- // get show episodes from favourites array in PodcastDetails here:
-
-
 
   
 
