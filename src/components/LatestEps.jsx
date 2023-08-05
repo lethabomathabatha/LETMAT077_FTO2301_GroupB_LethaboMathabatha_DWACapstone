@@ -31,8 +31,7 @@ export default function LatestEps() {
         .finally(() => setIsLoading(false));
     }, [visibleCount]);
 
-    // function to handle sort dates
-            // Function to handle sorting by A-Z
+        // Function to handle sorting by A-Z
         function sortAZ() {
             const sortedAZ = [...episodes].sort((a, b) => a.title.localeCompare(b.title));
             setEpisodes([...sortedAZ]);
@@ -79,7 +78,6 @@ export default function LatestEps() {
         <div className="latest--section">
              
             <aside className="latest--title">
-                {/* the name should be dependent on the sorting option selected */}
                 {sortingTitle}
             </aside>
             

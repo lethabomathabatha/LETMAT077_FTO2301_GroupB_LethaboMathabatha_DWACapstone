@@ -3,11 +3,7 @@ import '/src/pages/HomeStyles.css'
 
 export default function TopNav() {
     
-    // greeting based on the time of day
-  // let user = JSON.parse(localStorage.getItem("user"));
-  // let user = "Lethabo"
   const time = new Date().getHours();
-  // if it's before 12pm, it's morning, if it's after 12pm but before 6pm, it's afternoon, if it's after 6pm but before 3am, it's evening
   let greeting = "";
   if (time >= 3 && time < 12) {
     greeting = `Good Morning`;

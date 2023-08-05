@@ -52,10 +52,6 @@ export default function Search() {
         setIsLoading(false);
     };
 
-    // const handlePodcastDetailsClick = (result) => {
-    //     console.log('podcast details');
-    // };
-
     return (
         <div className="search--page">
             
